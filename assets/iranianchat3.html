@@ -1,0 +1,2241 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chatiha.ir | پیام‌رسان اختصاصی</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    
+    <style>
+        /* ============================================
+                   RESET & VARIABLES
+                   ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #2AABEE;
+            --primary-dark: #1A8BC8;
+            --primary-light: #7EC8E3;
+            --secondary: #34C759;
+            --danger: #FF3B30;
+            --warning: #FF9500;
+            --dark: #1C1C1E;
+            --dark-secondary: #2C2C2E;
+            --gray: #8E8E93;
+            --gray-light: #C7C7CC;
+            --light-gray: #F2F2F7;
+            --white: #FFFFFF;
+            --bubble-sent: #2AABEE;
+            --bubble-received: #E9ECEF;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-full: 9999px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --header-height: 56px;
+            --input-height: 56px;
+            --bottom-nav-height: 64px;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light-gray);
+            min-height: 100vh;
+            direction: rtl;
+            color: var(--dark);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ============================================
+                   SCROLLBAR
+                   ============================================ */
+        ::-webkit-scrollbar { width: 3px; height: 3px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--gray-light); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gray); }
+
+        /* ============================================
+                   SPLASH SCREEN
+                   ============================================ */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: splashFade 0.6s ease 1.5s forwards;
+        }
+
+        @keyframes splashFade {
+            to { opacity: 0; pointer-events: none; }
+        }
+
+        .splash-screen .logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--primary);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            animation: splashBounce 0.8s ease;
+        }
+
+        @keyframes splashBounce {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .splash-screen h1 {
+            color: white;
+            margin-top: 16px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .splash-screen .sub {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* ============================================
+                   AUTH PAGE (Telegram Style)
+                   ============================================ */
+        .auth-page {
+            display: none;
+            min-height: 100vh;
+            background: var(--white);
+            padding: 40px 24px;
+        }
+
+        .auth-page.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .auth-card .logo {
+            width: 72px;
+            height: 72px;
+            background: var(--primary);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(42, 171, 238, 0.3);
+        }
+
+        .auth-card h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .auth-card p {
+            color: var(--gray);
+            margin: 8px 0 32px;
+            font-size: 15px;
+        }
+
+        .auth-form .form-group {
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 16px 18px;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            transition: var(--transition);
+            background: var(--light-gray);
+            font-family: inherit;
+            color: var(--dark);
+            text-align: right;
+        }
+
+        .auth-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(42, 171, 238, 0.1);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            margin-top: 8px;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: scale(1.02);
+        }
+
+        .btn-primary:active { transform: scale(0.97); }
+
+        .auth-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer .divider { margin: 0 8px; color: var(--gray-light); }
+
+        /* ============================================
+                   APP CONTAINER
+                   ============================================ */
+        .app-container {
+            display: none;
+            height: 100vh;
+            max-width: 100%;
+            background: var(--light-gray);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .app-container.active { display: flex; }
+
+        /* ============================================
+                   SIDEBAR (Chat List - Telegram/WhatsApp Style)
+                   ============================================ */
+        .sidebar {
+            width: 100%;
+            max-width: 380px;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            flex-shrink: 0;
+            border-left: 1px solid #E5E5EA;
+        }
+
+        /* Header - WhatsApp Style */
+        .sidebar-header {
+            padding: 12px 16px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #E5E5EA;
+            flex-shrink: 0;
+            height: var(--header-height);
+        }
+
+        .sidebar-header .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-header .brand .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 900;
+            font-size: 16px;
+        }
+
+        .sidebar-header .brand h1 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .sidebar-header .brand h1 span {
+            color: var(--primary);
+        }
+
+        .sidebar-header .actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .sidebar-header .actions button {
+            padding: 8px;
+            background: none;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--gray);
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-header .actions button:hover {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        /* Search - Telegram Style */
+        .search-bar {
+            padding: 8px 16px;
+            background: var(--white);
+            flex-shrink: 0;
+        }
+
+        .search-bar .search-wrapper {
+            position: relative;
+            background: var(--light-gray);
+            border-radius: var(--radius-full);
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar .search-wrapper .icon {
+            color: var(--gray);
+            font-size: 18px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-size: 15px;
+            background: transparent;
+            font-family: inherit;
+            color: var(--dark);
+            outline: none;
+        }
+
+        .search-bar input::placeholder {
+            color: var(--gray);
+        }
+
+        /* Chat List - WhatsApp/Telegram Hybrid */
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 4px 0;
+            background: var(--white);
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            gap: 12px;
+            position: relative;
+            border-bottom: 1px solid #F2F2F7;
+        }
+
+        .chat-item:active {
+            background: var(--light-gray);
+        }
+
+        .chat-item .avatar {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .chat-item .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-item .avatar .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            min-width: 20px;
+            height: 20px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            padding: 0 5px;
+            border: 2px solid var(--white);
+        }
+
+        .chat-item .avatar .status-dot {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .status-dot.online { background: var(--secondary); }
+        .status-dot.away { background: var(--warning); }
+        .status-dot.offline { background: var(--gray); }
+
+        .chat-item .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-item .info .name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-item .info .name .time {
+            font-weight: 400;
+            font-size: 11px;
+            color: var(--gray);
+            margin-right: auto;
+        }
+
+        .chat-item .info .last-msg {
+            font-size: 13px;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .chat-item .info .last-msg .sent-icon {
+            font-size: 14px;
+        }
+
+        .chat-item .info .last-msg .pinned {
+            color: var(--primary);
+        }
+
+        .chat-item .info .last-msg .muted {
+            color: var(--gray-light);
+        }
+
+        /* ============================================
+                   CHAT AREA (WhatsApp/Telegram Style)
+                   ============================================ */
+        .chat-area {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            background: var(--light-gray);
+            min-width: 0;
+            height: 100vh;
+            position: relative;
+        }
+
+        .chat-area.active { display: flex; }
+
+        /* Chat Header - Telegram Style */
+        .chat-header {
+            padding: 8px 12px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            height: var(--header-height);
+            border-bottom: 1px solid #E5E5EA;
+        }
+
+        .chat-header .back-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+            padding: 4px;
+        }
+
+        .chat-header .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            position: relative;
+        }
+
+        .chat-header .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .chat-header .avatar .status-dot {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .chat-header .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .chat-header .info h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .chat-header .info .status {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .chat-header .actions {
+            display: flex;
+            gap: 2px;
+        }
+
+        .chat-header .actions button {
+            padding: 6px 8px;
+            background: none;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--gray);
+            transition: var(--transition);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-header .actions button:hover {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        /* Messages */
+        .messages-container {
+            flex: 1;
+            padding: 12px 16px 8px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: #E5EDF3;
+        }
+
+        .message {
+            display: flex;
+            gap: 8px;
+            max-width: 78%;
+            animation: messageIn 0.2s ease;
+        }
+
+        @keyframes messageIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.received { align-self: flex-start; }
+        .message.sent { align-self: flex-end; flex-direction: row-reverse; }
+
+        .message .msg-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .message .msg-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .message .bubble {
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            position: relative;
+            min-width: 40px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+        }
+
+        .message.received .bubble {
+            background: var(--white);
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.sent .bubble {
+            background: var(--bubble-sent);
+            color: white;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message .bubble .sender {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+
+        .message.sent .bubble .sender {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .message .bubble .text {
+            font-size: 15px;
+            line-height: 1.6;
+            word-break: break-word;
+        }
+
+        .message .bubble .time {
+            font-size: 10px;
+            color: var(--gray-light);
+            margin-top: 3px;
+            display: block;
+            text-align: left;
+        }
+
+        .message.sent .bubble .time {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .message .bubble .status-icons {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            margin-right: 4px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .message .bubble .status-icons.read {
+            color: var(--primary-light);
+        }
+
+        /* Date Divider - Telegram Style */
+        .date-divider {
+            text-align: center;
+            margin: 6px 0 10px;
+        }
+
+        .date-divider span {
+            background: rgba(0,0,0,0.05);
+            padding: 4px 14px;
+            font-size: 12px;
+            color: var(--gray);
+            border-radius: var(--radius-full);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Image in message */
+        .message .bubble .image-wrap {
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin: 2px 0;
+            position: relative;
+            max-width: 240px;
+        }
+
+        .message .bubble .image-wrap img {
+            width: 100%;
+            display: block;
+        }
+
+        .message .bubble .image-wrap .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .message .bubble .image-wrap:hover .image-overlay { opacity: 1; }
+        .message .bubble .image-wrap .image-overlay button {
+            padding: 6px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Voice Message */
+        .voice-msg {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 140px;
+            padding: 2px 0;
+        }
+
+        .voice-msg .play-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .voice-msg .play-btn:hover { transform: scale(1.1); }
+
+        .voice-msg .waveform {
+            flex: 1;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .voice-msg .waveform .bar {
+            width: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: height 0.2s ease;
+        }
+
+        .message.sent .voice-msg .waveform .bar {
+            background: rgba(255,255,255,0.7);
+        }
+
+        .voice-msg .duration {
+            font-size: 11px;
+            color: var(--gray);
+            flex-shrink: 0;
+        }
+
+        .message.sent .voice-msg .duration {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Reply */
+        .reply-preview {
+            background: rgba(0,0,0,0.04);
+            border-right: 3px solid var(--primary);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .reply-preview .reply-sender {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .reply-preview .reply-text {
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .message.sent .reply-preview {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .message.sent .reply-preview .reply-sender {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .message.sent .reply-preview .reply-text {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ============================================
+                   INPUT AREA (WhatsApp Style)
+                   ============================================ */
+        .input-area {
+            padding: 6px 12px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            min-height: var(--input-height);
+            border-top: 1px solid #E5E5EA;
+        }
+
+        .input-area .input-actions {
+            display: flex;
+            gap: 2px;
+        }
+
+        .input-area .input-actions button {
+            padding: 6px;
+            background: none;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 22px;
+            color: var(--gray);
+            transition: var(--transition);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-area .input-actions button:hover {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        .input-area .input-wrap {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-area .input-wrap input {
+            width: 100%;
+            padding: 10px 16px;
+            border: 1px solid #E5E5EA;
+            border-radius: var(--radius-full);
+            font-size: 15px;
+            transition: var(--transition);
+            background: var(--light-gray);
+            font-family: inherit;
+            color: var(--dark);
+            outline: none;
+        }
+
+        .input-area .input-wrap input:focus {
+            border-color: var(--primary);
+            background: var(--white);
+        }
+
+        .input-area .input-wrap input::placeholder {
+            color: var(--gray-light);
+        }
+
+        .input-area .send-btn {
+            padding: 8px 12px;
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+        }
+
+        .input-area .send-btn:hover {
+            transform: scale(1.05);
+            background: var(--primary-dark);
+        }
+
+        .input-area .send-btn:active { transform: scale(0.93); }
+
+        /* Reply Bar */
+        .reply-bar {
+            display: none;
+            padding: 4px 12px;
+            background: var(--light-gray);
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            border-top: 1px solid #E5E5EA;
+        }
+
+        .reply-bar.active { display: flex; }
+
+        .reply-bar .reply-content {
+            flex: 1;
+            color: var(--gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .reply-bar .reply-content strong {
+            color: var(--dark);
+        }
+
+        .reply-bar .cancel-reply {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: var(--gray);
+            padding: 4px 8px;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            padding: 4px 16px;
+            font-size: 12px;
+            color: var(--gray);
+            background: transparent;
+        }
+
+        .typing-indicator.active { display: block; }
+
+        /* ============================================
+                   BOTTOM NAV (Telegram/WhatsApp Hybrid)
+                   ============================================ */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid #E5E5EA;
+            padding: 6px 0 calc(6px + var(--safe-bottom));
+            z-index: 100;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.04);
+        }
+
+        .bottom-nav.active { display: flex; }
+
+        .bottom-nav button {
+            background: none;
+            border: none;
+            font-size: 22px;
+            padding: 6px 16px;
+            border-radius: var(--radius-sm);
+            color: var(--gray);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .bottom-nav button .label {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .bottom-nav button.active {
+            color: var(--primary);
+        }
+
+        .bottom-nav button .badge {
+            position: absolute;
+            top: 0;
+            right: 4px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            padding: 0 4px;
+        }
+
+        /* ============================================
+                   INFO PANEL (Telegram Style)
+                   ============================================ */
+        .info-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--white);
+            z-index: 60;
+            padding: 20px;
+            overflow-y: auto;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-panel.active { display: flex; }
+
+        .info-panel .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .info-panel .panel-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .info-panel .panel-header .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+            padding: 4px;
+        }
+
+        .info-panel .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 0;
+        }
+
+        .info-panel .profile-section .avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 28px;
+        }
+
+        .info-panel .profile-section .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-panel .profile-section .info h2 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .info-panel .profile-section .info span {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .info-panel .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--light-gray);
+            font-size: 14px;
+        }
+
+        .info-panel .info-item .label { color: var(--gray); }
+        .info-panel .info-item .value { font-weight: 500; }
+        .info-panel .info-item .value.secure { color: var(--secondary); }
+
+        .info-panel .media-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+
+        .info-panel .media-grid .media-item {
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            aspect-ratio: 1;
+            background: var(--light-gray);
+            cursor: pointer;
+        }
+
+        .info-panel .media-grid .media-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-panel .panel-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 16px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .info-panel .panel-actions button {
+            padding: 12px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            text-align: center;
+        }
+
+        .info-panel .panel-actions .btn-danger {
+            background: #FEE2E2;
+            color: var(--danger);
+        }
+
+        .info-panel .panel-actions .btn-danger:hover { background: #FECACA; }
+
+        .info-panel .panel-actions .btn-muted {
+            background: var(--light-gray);
+            color: var(--gray);
+        }
+
+        .info-panel .panel-actions .btn-muted:hover { background: #E5E5EA; }
+
+        /* ============================================
+                   RESPONSIVE - MOBILE FIRST
+                   ============================================ */
+        @media (max-width: 768px) {
+            .sidebar {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .chat-area {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 50;
+                background: var(--light-gray);
+            }
+
+            .chat-area.active { display: flex; }
+
+            .chat-header .back-btn { display: block !important; }
+
+            .bottom-nav.active { display: flex; }
+
+            .message { max-width: 85%; }
+
+            .info-panel {
+                z-index: 70;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --header-height: 50px;
+                --input-height: 50px;
+                --bottom-nav-height: 56px;
+            }
+
+            .sidebar-header .brand h1 { font-size: 16px; }
+            .sidebar-header .brand .logo-icon { width: 28px; height: 28px; font-size: 14px; }
+
+            .chat-item { padding: 8px 12px; }
+            .chat-item .avatar { width: 40px; height: 40px; font-size: 15px; }
+            .chat-item .info .name { font-size: 14px; }
+            .chat-item .info .last-msg { font-size: 12px; }
+
+            .message { max-width: 92%; }
+            .message .bubble .text { font-size: 14px; }
+            .message .bubble { padding: 6px 10px; }
+
+            .chat-header .info h2 { font-size: 15px; }
+            .chat-header .info .status { font-size: 11px; }
+
+            .input-area .input-wrap input { font-size: 14px; padding: 8px 14px; }
+            .input-area .send-btn { width: 38px; height: 38px; font-size: 18px; }
+
+            .bottom-nav button { font-size: 18px; padding: 4px 12px; }
+            .bottom-nav button .label { font-size: 9px; }
+
+            .auth-card { padding: 0 8px; }
+            .auth-card h1 { font-size: 24px; }
+
+            .info-panel { padding: 16px; }
+        }
+
+        /* ============================================
+                   DARK MODE SUPPORT (Optional)
+                   ============================================ */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --light-gray: #1C1C1E;
+                --white: #2C2C2E;
+                --dark: #FFFFFF;
+                --gray: #8E8E93;
+                --gray-light: #636366;
+                --bubble-received: #3A3A3C;
+                --messages-bg: #1C1C1E;
+            }
+
+            .messages-container {
+                background: #0A0A0A;
+            }
+
+            .message.received .bubble {
+                background: #2C2C2E;
+                color: white;
+            }
+
+            .chat-item {
+                border-bottom-color: #3A3A3C;
+            }
+
+            .sidebar {
+                background: var(--white);
+            }
+
+            .sidebar-header {
+                background: var(--white);
+                border-bottom-color: #3A3A3C;
+            }
+
+            .chat-header {
+                background: var(--white);
+                border-bottom-color: #3A3A3C;
+            }
+
+            .input-area {
+                background: var(--white);
+                border-top-color: #3A3A3C;
+            }
+
+            .input-area .input-wrap input {
+                background: #3A3A3C;
+                color: white;
+                border-color: #3A3A3C;
+            }
+
+            .input-area .input-wrap input:focus {
+                border-color: var(--primary);
+                background: #2C2C2E;
+            }
+
+            .bottom-nav {
+                background: var(--white);
+                border-top-color: #3A3A3C;
+            }
+
+            .date-divider span {
+                background: rgba(255,255,255,0.08);
+                color: var(--gray);
+            }
+
+            .search-bar .search-wrapper {
+                background: #3A3A3C;
+            }
+
+            .search-bar input {
+                color: white;
+            }
+
+            .chat-item .info .last-msg {
+                color: var(--gray);
+            }
+
+            .info-panel {
+                background: var(--white);
+            }
+
+            .info-panel .info-item {
+                border-bottom-color: #3A3A3C;
+            }
+
+            .reply-bar {
+                background: #3A3A3C;
+                border-top-color: #3A3A3C;
+            }
+
+            .reply-preview {
+                background: rgba(255,255,255,0.05);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- SPLASH SCREEN -->
+    <!-- ============================================ -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="logo">چ</div>
+        <h1>Chatiha.ir</h1>
+        <span class="sub">پیام‌رسان اختصاصی و امن</span>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- AUTH PAGE -->
+    <!-- ============================================ -->
+    <div class="auth-page" id="authPage">
+        <div class="auth-card">
+            <div class="logo">چ</div>
+            <h1>خوش آمدید</h1>
+            <p>به پیام‌رسان اختصاصی <strong>Chatiha.ir</strong> خوش آمدید</p>
+
+            <form class="auth-form" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <input type="text" id="loginPhone" placeholder="شماره موبایل یا ایمیل" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="loginPassword" placeholder="رمز عبور" required>
+                </div>
+                <button type="submit" class="btn-primary">ورود به Chatiha</button>
+            </form>
+
+            <div class="auth-footer">
+                <a href="#" onclick="return false;">رمز عبور را فراموش کرده‌اید؟</a>
+                <span class="divider">|</span>
+                <a href="#" onclick="return false;">ثبت‌نام</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- APP CONTAINER -->
+    <!-- ============================================ -->
+    <div class="app-container" id="appContainer">
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Header -->
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="logo-icon">چ</div>
+                    <h1>Chatiha<span>.ir</span></h1>
+                </div>
+                <div class="actions">
+                    <button title="جستجو" onclick="focusSearch()">🔍</button>
+                    <button title="گروه جدید">➕</button>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="search-bar">
+                <div class="search-wrapper">
+                    <span class="icon">🔍</span>
+                    <input type="text" placeholder="جستجو در چت‌ها..." id="searchInput" oninput="filterChats(this.value)">
+                </div>
+            </div>
+
+            <!-- Chat List -->
+            <div class="chat-list" id="chatList">
+                <!-- Chat 1 -->
+                <div class="chat-item active" onclick="switchChat('1')">
+                    <div class="avatar">
+                        <img src="https://ui-avatars.com/api/?name=گروه+توسعه&background=2AABEE&color=fff&size=128" alt="گروه توسعه">
+                        <span class="badge">3</span>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="info">
+                        <div class="name">
+                            گروه توسعه
+                            <span class="time">۱۵:۳۰</span>
+                        </div>
+                        <div class="last-msg">
+                            <span class="sent-icon">✓✓</span>
+                            سلام همه! جلسه امروز ساعت ۳...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat 2 -->
+                <div class="chat-item" onclick="switchChat('2')">
+                    <div class="avatar">
+                        <img src="https://ui-avatars.com/api/?name=پروژه+جدید&background=34C759&color=fff&size=128" alt="پروژه جدید">
+                        <span class="badge">۱۲</span>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="info">
+                        <div class="name">
+                            پروژه جدید
+                            <span class="time">۱۴:۲۰</span>
+                        </div>
+                        <div class="last-msg">
+                            <span class="sent-icon">✓</span>
+                            جلسه فردا ساعت ۱۰ صبح...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat 3 -->
+                <div class="chat-item" onclick="switchChat('3')">
+                    <div class="avatar">
+                        <img src="https://ui-avatars.com/api/?name=مدیران+ارشد&background=FF9500&color=fff&size=128" alt="مدیران ارشد">
+                        <span class="status-dot away"></span>
+                    </div>
+                    <div class="info">
+                        <div class="name">
+                            مدیران ارشد
+                            <span class="time">۱۲:۴۵</span>
+                        </div>
+                        <div class="last-msg">
+                            <span class="pinned">📌</span>
+                            گزارش ماهانه آماده است...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat 4 -->
+                <div class="chat-item" onclick="switchChat('4')">
+                    <div class="avatar">
+                        <img src="https://ui-avatars.com/api/?name=مریم+احمدی&background=FF3B30&color=fff&size=128" alt="مریم احمدی">
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="info">
+                        <div class="name">
+                            مریم احمدی
+                            <span class="time">۱۰:۳۰</span>
+                        </div>
+                        <div class="last-msg">
+                            <span class="sent-icon">✓✓</span>
+                            ممنون بابت راهنماییت 🙏
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat 5 -->
+                <div class="chat-item" onclick="switchChat('5')">
+                    <div class="avatar" style="background:#8E8E93;">
+                        <span>ر</span>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="info">
+                        <div class="name">
+                            رضا کریمی
+                            <span class="time">۰۹:۱۵</span>
+                        </div>
+                        <div class="last-msg">
+                            <span class="muted">🔇</span>
+                            فایل‌ها رو برات می‌فرستم...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ===== CHAT AREA ===== -->
+        <main class="chat-area" id="chatArea">
+            <!-- Header -->
+            <header class="chat-header">
+                <button class="back-btn" onclick="closeChat()">←</button>
+                <div class="avatar">
+                    <img src="https://ui-avatars.com/api/?name=گروه+توسعه&background=2AABEE&color=fff&size=128" alt="گروه توسعه" id="headerAvatar">
+                    <span class="status-dot online"></span>
+                </div>
+                <div class="info">
+                    <h2 id="chatTitle">گروه توسعه</h2>
+                    <span class="status" id="chatStatus">۱۲ عضو • آنلاین</span>
+                </div>
+                <div class="actions">
+                    <button title="تماس صوتی">📞</button>
+                    <button title="تماس تصویری">📹</button>
+                    <button title="اطلاعات" onclick="toggleInfoPanel()">ℹ️</button>
+                </div>
+            </header>
+
+            <!-- Messages -->
+            <div class="messages-container" id="messagesContainer">
+                <!-- Date Divider -->
+                <div class="date-divider"><span>امروز</span></div>
+
+                <!-- Message Received -->
+                <div class="message received">
+                    <div class="msg-avatar">
+                        <img src="https://ui-avatars.com/api/?name=احمد+محمدی&background=6B7280&color=fff&size=64" alt="احمد">
+                    </div>
+                    <div class="bubble">
+                        <div class="sender">احمد محمدی</div>
+                        <div class="text">سلام همه! جلسه امروز ساعت ۳ برگزار میشه</div>
+                        <span class="time">۱۴:۳۰</span>
+                    </div>
+                </div>
+
+                <!-- Message Sent -->
+                <div class="message sent">
+                    <div class="msg-avatar">
+                        <img src="https://ui-avatars.com/api/?name=علی+رضایی&background=2AABEE&color=fff&size=64" alt="علی">
+                    </div>
+                    <div class="bubble">
+                        <div class="sender">من</div>
+                        <div class="text">بله حتماً حضور دارم</div>
+                        <span class="time">۱۴:۳۲ <span class="status-icons read">✓✓</span></span>
+                    </div>
+                </div>
+
+                <!-- Voice Message -->
+                <div class="message received">
+                    <div class="msg-avatar">
+                        <img src="https://ui-avatars.com/api/?name=سارا+کریمی&background=34C759&color=fff&size=64" alt="سارا">
+                    </div>
+                    <div class="bubble">
+                        <div class="sender">سارا کریمی</div>
+                        <div class="voice-msg">
+                            <button class="play-btn" onclick="toggleVoice(this)">▶</button>
+                            <div class="waveform">
+                                <div class="bar" style="height:8px"></div>
+                                <div class="bar" style="height:14px"></div>
+                                <div class="bar" style="height:22px"></div>
+                                <div class="bar" style="height:18px"></div>
+                                <div class="bar" style="height:26px"></div>
+                                <div class="bar" style="height:12px"></div>
+                                <div class="bar" style="height:20px"></div>
+                                <div class="bar" style="height:16px"></div>
+                                <div class="bar" style="height:24px"></div>
+                            </div>
+                            <span class="duration">۰:۲۴</span>
+                        </div>
+                        <span class="time">۱۴:۳۴</span>
+                    </div>
+                </div>
+
+                <!-- Image Message -->
+                <div class="message received">
+                    <div class="msg-avatar">
+                        <img src="https://ui-avatars.com/api/?name=رضا+حسینی&background=FF9500&color=fff&size=64" alt="رضا">
+                    </div>
+                    <div class="bubble">
+                        <div class="sender">رضا حسینی</div>
+                        <div class="image-wrap">
+                            <img src="https://picsum.photos/seed/chat/400/300" alt="تصویر">
+                            <div class="image-overlay">
+                                <button onclick="viewImage(this)">👁️</button>
+                                <button onclick="downloadImage(this)">⬇️</button>
+                            </div>
+                        </div>
+                        <div class="text" style="font-size:13px;color:var(--gray);">مستندات پروژه جدید</div>
+                        <span class="time">۱۴:۳۵</span>
+                    </div>
+                </div>
+
+                <!-- Reply Message -->
+                <div class="message sent">
+                    <div class="msg-avatar">
+                        <img src="https://ui-avatars.com/api/?name=علی+رضایی&background=2AABEE&color=fff&size=64" alt="علی">
+                    </div>
+                    <div class="bubble">
+                        <div class="sender">من</div>
+                        <div class="reply-preview">
+                            <div class="reply-sender">سارا کریمی:</div>
+                            <div class="reply-text">مستندات پروژه جدید</div>
+                        </div>
+                        <div class="text">عالی بود! ممنون از شما</div>
+                        <span class="time">۱۴:۳۶ <span class="status-icons read">✓✓</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reply Bar -->
+            <div class="reply-bar" id="replyBar">
+                <span>پاسخ به <strong id="replyToName">احمد محمدی</strong></span>
+                <span class="reply-content" id="replyContent">سلام همه! جلسه امروز...</span>
+                <button class="cancel-reply" onclick="cancelReply()">✕</button>
+            </div>
+
+            <!-- Typing -->
+            <div class="typing-indicator" id="typingIndicator">در حال تایپ...</div>
+
+            <!-- Input -->
+            <div class="input-area">
+                <div class="input-actions">
+                    <button onclick="toggleEmoji()">😊</button>
+                    <button onclick="showAttachMenu()">📎</button>
+                </div>
+                <div class="input-wrap">
+                    <input type="text" id="messageInput" placeholder="پیام خود را بنویسید..." onkeypress="handleKeyPress(event)">
+                </div>
+                <button class="send-btn" onclick="sendMessage()">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"/>
+                    </svg>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- ===== INFO PANEL ===== -->
+    <div class="info-panel" id="infoPanel">
+        <div class="panel-header">
+            <h3>اطلاعات گروه</h3>
+            <button class="close-btn" onclick="toggleInfoPanel()">✕</button>
+        </div>
+
+        <div class="profile-section">
+            <div class="avatar">
+                <img src="https://ui-avatars.com/api/?name=گروه+توسعه&background=2AABEE&color=fff&size=128" alt="گروه">
+            </div>
+            <div class="info">
+                <h2>گروه توسعه</h2>
+                <span>۲۴ عضو • خصوصی</span>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span class="label">نوع</span>
+            <span class="value" style="color:var(--danger);">🔒 خصوصی</span>
+        </div>
+        <div class="info-item">
+            <span class="label">اعضا</span>
+            <span class="value">۲۴ نفر</span>
+        </div>
+        <div class="info-item">
+            <span class="label">امنیت</span>
+            <span class="value secure">✅ رمزنگاری سرتاسری</span>
+        </div>
+
+        <div>
+            <h4 style="font-size:14px;color:var(--gray);margin-bottom:8px;">رسانه‌ها</h4>
+            <div class="media-grid">
+                <div class="media-item"><img src="https://picsum.photos/seed/1/100/100" alt="media"></div>
+                <div class="media-item"><img src="https://picsum.photos/seed/2/100/100" alt="media"></div>
+                <div class="media-item"><img src="https://picsum.photos/seed/3/100/100" alt="media"></div>
+                <div class="media-item"><img src="https://picsum.photos/seed/4/100/100" alt="media"></div>
+            </div>
+        </div>
+
+        <div class="panel-actions">
+            <button class="btn-danger">🚪 خروج از گروه</button>
+            <button class="btn-muted">🔇 بیصدا کردن</button>
+        </div>
+    </div>
+
+    <!-- ===== BOTTOM NAV ===== -->
+    <nav class="bottom-nav" id="bottomNav">
+        <button class="active" onclick="mobileNav('chats')">
+            💬
+            <span class="badge">۵</span>
+            <span class="label">چت‌ها</span>
+        </button>
+        <button onclick="mobileNav('calls')">
+            📞
+            <span class="label">تماس‌ها</span>
+        </button>
+        <button onclick="mobileNav('contacts')">
+            👥
+            <span class="label">مخاطبین</span>
+        </button>
+        <button onclick="mobileNav('settings')">
+            ⚙️
+            <span class="label">تنظیمات</span>
+        </button>
+    </nav>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================================ -->
+    <script>
+        // ============================================================
+        // DATA
+        // ============================================================
+        const chats = {
+            '1': {
+                name: 'گروه توسعه',
+                status: '۱۲ عضو • آنلاین',
+                avatar: 'https://ui-avatars.com/api/?name=گروه+توسعه&background=2AABEE&color=fff&size=128'
+            },
+            '2': {
+                name: 'پروژه جدید',
+                status: '۸ عضو • آنلاین',
+                avatar: 'https://ui-avatars.com/api/?name=پروژه+جدید&background=34C759&color=fff&size=128'
+            },
+            '3': {
+                name: 'مدیران ارشد',
+                status: '۵ عضو • مشغول',
+                avatar: 'https://ui-avatars.com/api/?name=مدیران+ارشد&background=FF9500&color=fff&size=128'
+            },
+            '4': {
+                name: 'مریم احمدی',
+                status: 'آنلاین',
+                avatar: 'https://ui-avatars.com/api/?name=مریم+احمدی&background=FF3B30&color=fff&size=128'
+            },
+            '5': {
+                name: 'رضا کریمی',
+                status: 'آخرین بازدید ۵ دقیقه پیش',
+                avatar: 'https://ui-avatars.com/api/?name=رضا+کریمی&background=8E8E93&color=fff&size=128'
+            }
+        };
+
+        let currentChat = '1';
+        let isReplying = false;
+        let replyData = null;
+        let voiceInterval = null;
+
+        // ============================================================
+        // SPLASH & AUTH
+        // ============================================================
+        setTimeout(() => {
+            document.getElementById('splashScreen').style.display = 'none';
+            document.getElementById('authPage').classList.add('active');
+        }, 2000);
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const phone = document.getElementById('loginPhone').value;
+            const pass = document.getElementById('loginPassword').value;
+
+            if (!phone || !pass) {
+                alert('لطفاً اطلاعات خود را وارد کنید');
+                return false;
+            }
+
+            document.getElementById('authPage').classList.remove('active');
+            document.getElementById('appContainer').classList.add('active');
+
+            if (window.innerWidth <= 480) {
+                document.getElementById('bottomNav').classList.add('active');
+            }
+
+            setTimeout(() => {
+                addSystemMessage('به Chatiha.ir خوش آمدید! 🎉');
+                addSystemMessage('🔒 همه پیام‌ها با رمزنگاری سرتاسری محافظت می‌شوند');
+            }, 400);
+
+            return false;
+        }
+
+        // ============================================================
+        // CHAT FUNCTIONS
+        // ============================================================
+        function switchChat(chatId) {
+            currentChat = chatId;
+            const chat = chats[chatId];
+
+            document.querySelectorAll('.chat-item').forEach(el => {
+                el.classList.toggle('active', el.dataset?.chat === chatId);
+            });
+
+            document.getElementById('chatTitle').textContent = chat.name;
+            document.getElementById('chatStatus').textContent = chat.status;
+            document.getElementById('headerAvatar').src = chat.avatar;
+
+            const container = document.getElementById('messagesContainer');
+            container.innerHTML = '';
+            container.innerHTML += `<div class="date-divider"><span>امروز</span></div>`;
+
+            const messages = getChatMessages(chatId);
+            messages.forEach(msg => appendMessageToContainer(msg));
+
+            container.scrollTop = container.scrollHeight;
+            document.getElementById('chatArea').classList.add('active');
+            document.getElementById('infoPanel').classList.remove('active');
+        }
+
+        function getChatMessages(chatId) {
+            const all = {
+                '1': [
+                    { sender: 'احمد محمدی', text: 'سلام همه! جلسه امروز ساعت ۳ برگزار میشه', time: '۱۴:۳۰',
+                    received: true },
+                    { sender: 'من', text: 'بله حتماً حضور دارم', time: '۱۴:۳۲', received: false },
+                    { sender: 'سارا کریمی', text: 'مستندات پروژه جدید', time: '۱۴:۳۵', received: true, image: true },
+                    { sender: 'رضا حسینی', text: 'عالیه! منم می‌تونم بیام', time: '۱۴:۳۶', received: true },
+                    { sender: 'من', text: 'پس جلسه رو توی اتاق جلسات برگزار می‌کنیم', time: '۱۴:۳۸',
+                    received: false },
+                ],
+                '2': [
+                    { sender: 'مدیر پروژه', text: 'جلسه فردا ساعت ۱۰ صبح برگزار میشه', time: '۱۴:۲۰',
+                    received: true },
+                    { sender: 'من', text: 'حتماً شرکت می‌کنم', time: '۱۴:۲۲', received: false },
+                    { sender: 'تیم طراحی', text: 'موکاپ‌ها آماده است', time: '۱۴:۲۵', received: true },
+                ],
+                '3': [
+                    { sender: 'سیستم', text: 'گروه مدیران ارشد ایجاد شد', time: '۱۲:۰۰', received: true,
+                    system: true },
+                    { sender: 'مدیرعامل', text: 'سلام به همه مدیران', time: '۱۲:۰۵', received: true },
+                ],
+                '4': [
+                    { sender: 'مریم احمدی', text: 'ممنون بابت راهنماییت 🙏', time: '۱۰:۳۰', received: true },
+                    { sender: 'من', text: 'خواهش می‌کنم!', time: '۱۰:۳۲', received: false },
+                ],
+                '5': [
+                    { sender: 'رضا کریمی', text: 'فایل‌ها رو برات می‌فرستم...', time: '۰۹:۱۵', received: true },
+                ]
+            };
+            return all[chatId] || [{ sender: 'سیستم', text: 'به گفتگو خوش آمدید', time: '۱۲:۰۰', received: true,
+                system: true }];
+        }
+
+        function appendMessageToContainer(msg) {
+            const container = document.getElementById('messagesContainer');
+            const div = document.createElement('div');
+            div.className = `message ${msg.received ? 'received' : 'sent'}`;
+
+            let avatarHtml = '';
+            if (msg.received && !msg.system) {
+                const name = msg.sender.split(' ')[0] || 'کاربر';
+                avatarHtml = `
+                        <div class="msg-avatar">
+                            <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(msg.sender)}&background=6B7280&color=fff&size=64" alt="${msg.sender}">
+                        </div>
+                    `;
+            } else if (!msg.system) {
+                avatarHtml = `
+                        <div class="msg-avatar">
+                            <img src="https://ui-avatars.com/api/?name=علی+رضایی&background=2AABEE&color=fff&size=64" alt="علی">
+                        </div>
+                    `;
+            }
+
+            let contentHtml = '';
+            if (msg.image) {
+                contentHtml = `
+                        <div class="image-wrap">
+                            <img src="https://picsum.photos/seed/${Date.now()}/400/300" alt="تصویر">
+                            <div class="image-overlay">
+                                <button onclick="viewImage(this)">👁️</button>
+                                <button onclick="downloadImage(this)">⬇️</button>
+                            </div>
+                        </div>
+                        <div class="text" style="font-size:13px;color:var(--gray);">${msg.text}</div>
+                    `;
+            } else if (msg.voice) {
+                contentHtml = `
+                        <div class="voice-msg">
+                            <button class="play-btn" onclick="toggleVoice(this)">▶</button>
+                            <div class="waveform">
+                                ${Array.from({length: 10}, (_, i) => 
+                                    `<div class="bar" style="height:${6 + Math.random() * 22}px"></div>`
+                                ).join('')}
+                            </div>
+                            <span class="duration">۰:${String(Math.floor(Math.random() * 40) + 10).padStart(2, '0')}</span>
+                        </div>
+                    `;
+            } else if (msg.system) {
+                contentHtml = `<div class="text" style="text-align:center;color:var(--gray);font-size:13px;">${msg.text}</div>`;
+            } else {
+                contentHtml = `<div class="text">${msg.text}</div>`;
+            }
+
+            let statusHtml = '';
+            if (!msg.received && !msg.system) {
+                statusHtml = `<span class="status-icons read">✓✓</span>`;
+            }
+
+            let replyHtml = '';
+            if (msg.replyTo) {
+                replyHtml = `
+                        <div class="reply-preview">
+                            <div class="reply-sender">${msg.replyTo.sender}:</div>
+                            <div class="reply-text">${msg.replyTo.text}</div>
+                        </div>
+                    `;
+            }
+
+            let senderHtml = '';
+            if (!msg.system) {
+                senderHtml = `<div class="sender">${msg.sender}</div>`;
+            }
+
+            div.innerHTML = `
+                    ${avatarHtml}
+                    <div class="bubble" onclick="${!msg.received && !msg.system ? 'startReply(this)' : ''}">
+                        ${senderHtml}
+                        ${replyHtml}
+                        ${contentHtml}
+                        <span class="time">${msg.time} ${statusHtml}</span>
+                    </div>
+                `;
+
+            container.appendChild(div);
+        }
+
+        function addSystemMessage(text) {
+            const container = document.getElementById('messagesContainer');
+            const div = document.createElement('div');
+            div.className = 'message received';
+            div.style.maxWidth = '100%';
+            div.innerHTML = `
+                    <div class="bubble" style="background:rgba(0,0,0,0.04);color:var(--gray);text-align:center;width:100%;">
+                        <div class="text" style="font-size:13px;">${text}</div>
+                    </div>
+                `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // ============================================================
+        // SEND MESSAGE
+        // ============================================================
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const container = document.getElementById('messagesContainer');
+            const now = new Date();
+            const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+            let replyHtml = '';
+            if (isReplying && replyData) {
+                replyHtml = `
+                        <div class="reply-preview">
+                            <div class="reply-sender">${replyData.sender}:</div>
+                            <div class="reply-text">${replyData.text}</div>
+                        </div>
+                    `;
+            }
+
+            const div = document.createElement('div');
+            div.className = 'message sent';
+            div.innerHTML = `
+                    <div class="msg-avatar">
+                        <img src="https://ui-avatars.com/api/?name=علی+رضایی&background=2AABEE&color=fff&size=64" alt="علی">
+                    </div>
+                    <div class="bubble">
+                        <div class="sender">من</div>
+                        ${replyHtml}
+                        <div class="text">${text}</div>
+                        <span class="time">${time} <span class="status-icons">✓</span></span>
+                    </div>
+                `;
+
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            input.value = '';
+            cancelReply();
+
+            setTimeout(() => {
+                const replies = [
+                    'ممنون بابت پیامت 🙏',
+                    'حتماً بررسی می‌کنم',
+                    'عالی بود!',
+                    'به زودی پاسخ می‌دم',
+                    'متوجه شدم، ممنون',
+                ];
+                const reply = replies[Math.floor(Math.random() * replies.length)];
+                const rTime = new Date();
+                const rt = rTime.getHours().toString().padStart(2, '0') + ':' + rTime.getMinutes().toString()
+                .padStart(2, '0');
+
+                const replyDiv = document.createElement('div');
+                replyDiv.className = 'message received';
+                replyDiv.innerHTML = `
+                        <div class="msg-avatar">
+                            <img src="https://ui-avatars.com/api/?name=احمد+محمدی&background=6B7280&color=fff&size=64" alt="احمد">
+                        </div>
+                        <div class="bubble">
+                            <div class="sender">احمد محمدی</div>
+                            <div class="text">${reply}</div>
+                            <span class="time">${rt}</span>
+                        </div>
+                    `;
+                container.appendChild(replyDiv);
+                container.scrollTop = container.scrollHeight;
+
+                const lastSent = container.querySelector('.message.sent:last-child .time');
+                if (lastSent) {
+                    lastSent.innerHTML = `${time} <span class="status-icons read">✓✓</span>`;
+                }
+            }, 1000 + Math.random() * 1500);
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // ============================================================
+        // REPLY
+        // ============================================================
+        function startReply(element) {
+            const bubble = element.closest('.bubble');
+            const sender = bubble.querySelector('.sender')?.textContent || 'کاربر';
+            const text = bubble.querySelector('.text')?.textContent || 'پیام';
+
+            isReplying = true;
+            replyData = { sender, text: text.trim() };
+
+            document.getElementById('replyBar').classList.add('active');
+            document.getElementById('replyToName').textContent = sender;
+            document.getElementById('replyContent').textContent = text.trim();
+
+            document.getElementById('messageInput').focus();
+        }
+
+        function cancelReply() {
+            isReplying = false;
+            replyData = null;
+            document.getElementById('replyBar').classList.remove('active');
+        }
+
+        // ============================================================
+        // VOICE
+        // ============================================================
+        function toggleVoice(btn) {
+            const isPlaying = btn.textContent === '⏸';
+            btn.textContent = isPlaying ? '▶' : '⏸';
+
+            const waveform = btn.closest('.voice-msg').querySelector('.waveform');
+            if (!isPlaying) {
+                let count = 0;
+                voiceInterval = setInterval(() => {
+                    const bars = waveform.querySelectorAll('.bar');
+                    bars.forEach(bar => {
+                        bar.style.height = (6 + Math.random() * 24) + 'px';
+                    });
+                    count++;
+                    if (count > 40) {
+                        clearInterval(voiceInterval);
+                        btn.textContent = '▶';
+                    }
+                }, 150);
+            } else {
+                clearInterval(voiceInterval);
+            }
+        }
+
+        // ============================================================
+        // IMAGE
+        // ============================================================
+        function viewImage(btn) {
+            const img = btn.closest('.image-wrap').querySelector('img');
+            window.open(img.src, '_blank');
+        }
+
+        function downloadImage(btn) {
+            const img = btn.closest('.image-wrap').querySelector('img');
+            const link = document.createElement('a');
+            link.download = 'image.jpg';
+            link.href = img.src;
+            link.click();
+        }
+
+        // ============================================================
+        // SEARCH
+        // ============================================================
+        function filterChats(query) {
+            const items = document.querySelectorAll('.chat-item');
+            const q = query.toLowerCase().trim();
+
+            items.forEach(item => {
+                const name = item.querySelector('.name')?.textContent?.toLowerCase() || '';
+                const lastMsg = item.querySelector('.last-msg')?.textContent?.toLowerCase() || '';
+                const match = name.includes(q) || lastMsg.includes(q);
+                item.style.display = match || !q ? 'flex' : 'none';
+            });
+        }
+
+        function focusSearch() {
+            document.getElementById('searchInput').focus();
+        }
+
+        // ============================================================
+        // INFO PANEL
+        // ============================================================
+        function toggleInfoPanel() {
+            document.getElementById('infoPanel').classList.toggle('active');
+        }
+
+        // ============================================================
+        // MOBILE
+        // ============================================================
+        function closeChat() {
+            document.getElementById('chatArea').classList.remove('active');
+        }
+
+        function mobileNav(tab) {
+            document.querySelectorAll('#bottomNav button').forEach(b => b.classList.remove('active'));
+
+            const map = { chats: 0, calls: 1, contacts: 2, settings: 3 };
+            const idx = map[tab] || 0;
+            const btns = document.querySelectorAll('#bottomNav button');
+            if (btns[idx]) btns[idx].classList.add('active');
+
+            if (tab === 'chats') {
+                closeChat();
+                document.getElementById('infoPanel').classList.remove('active');
+            } else if (tab === 'calls') {
+                alert('📞 تماس‌های اخیر');
+            } else if (tab === 'contacts') {
+                alert('👥 لیست مخاطبین');
+            } else if (tab === 'settings') {
+                alert('⚙️ تنظیمات\n\n• تغییر رمز عبور\n• فعال‌سازی ۲FA\n• مدیریت دستگاه‌ها\n• تم و رنگ‌بندی\n• اعلان‌ها');
+            }
+        }
+
+        // ============================================================
+        // ATTACH & EMOJI
+        // ============================================================
+        function showAttachMenu() {
+            const options = ['📷 تصویر', '🎵 صدا', '📄 فایل', '📍 موقعیت'];
+            const choice = prompt('انتخاب کنید:\n' + options.map((o, i) => `${i+1}. ${o}`).join('\n'));
+            if (choice && parseInt(choice) > 0 && parseInt(choice) <= options.length) {
+                const container = document.getElementById('messagesContainer');
+                const time = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+
+                const div = document.createElement('div');
+                div.className = 'message sent';
+                div.innerHTML = `
+                        <div class="msg-avatar">
+                            <img src="https://ui-avatars.com/api/?name=علی+رضایی&background=2AABEE&color=fff&size=64" alt="علی">
+                        </div>
+                        <div class="bubble">
+                            <div class="sender">من</div>
+                            <div class="text">${options[parseInt(choice)-1]} ارسال شد</div>
+                            <span class="time">${time} <span class="status-icons">✓</span></span>
+                        </div>
+                    `;
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        function toggleEmoji() {
+            const emojis = ['😊', '❤️', '😂', '👍', '🔥', '🎉', '💯', '✨', '🙏', '👏', '💪', '🤝'];
+            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            const input = document.getElementById('messageInput');
+            input.value += randomEmoji;
+            input.focus();
+        }
+
+        // ============================================================
+        // TYPING
+        // ============================================================
+        let typingTimeout;
+        document.getElementById('messageInput').addEventListener('input', function() {
+            const indicator = document.getElementById('typingIndicator');
+            indicator.classList.add('active');
+
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                indicator.classList.remove('active');
+            }, 1500);
+        });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('messagesContainer');
+            container.scrollTop = container.scrollHeight;
+
+            if (window.innerWidth <= 480) {
+                document.getElementById('bottomNav').classList.add('active');
+            }
+
+            console.log('🚀 Chatiha.ir Loaded!');
+            console.log('📱 Hybrid UI: Telegram + WhatsApp + Rubika + Eita');
+            console.log('🔒 Security: End-to-End Encryption');
+        });
+
+        window.addEventListener('resize', function() {
+            const isMobile = window.innerWidth <= 480;
+            if (isMobile) {
+                document.getElementById('bottomNav').classList.add('active');
+            } else {
+                document.getElementById('bottomNav').classList.remove('active');
+                document.getElementById('infoPanel').classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
