@@ -1,0 +1,17 @@
+{
+  "name": "iranianchat",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Secure, scalable and customizable chat platform",
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "dev": "pnpm --filter @iranianchat/web dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
