@@ -1,0 +1,36 @@
+name: Fix Chatiha visuals
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-chatiha-visuals.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore login background and profile photos
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('chatiha/index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace(".auth{min-height:100svh;display:grid;place-items:center;padding:20px;background:#f5f8fc}", ".auth{min-height:100svh;display:grid;place-items:center;padding:20px;background:url('../assets/images/bg-body.png') center/cover fixed no-repeat}")
+          replacements={
+          'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=220&q=85':'https://randomuser.me/api/portraits/men/32.jpg',
+          'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=220&q=85':'https://randomuser.me/api/portraits/women/44.jpg',
+          'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=220&q=85':'https://randomuser.me/api/portraits/men/75.jpg',
+          'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=220&q=85':'https://randomuser.me/api/portraits/men/41.jpg',
+          'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=220&q=85':'https://randomuser.me/api/portraits/women/65.jpg'
+          }
+          for a,b in replacements.items(): s=s.replace(a,b)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add chatiha/index.html
+          git diff --cached --quiet || git commit -m 'fix(chatiha): restore login background and reliable profile photos'
+          git push
