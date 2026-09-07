@@ -1,0 +1,2461 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>اساتید پورتال | شبکه علمی اساتید ایران</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #0a1628;
+            --primary-light: #1a2d4a;
+            --primary-gradient: linear-gradient(145deg, #0a1628, #1a3a6a);
+            --accent: #4a7abf;
+            --accent-light: #6a9adf;
+            --teal: #18a6a0;
+            --teal-light: #dff5f1;
+            --coral: #ef765f;
+            --coral-light: #fde8e3;
+            --purple: #6a4a9a;
+            --purple-light: #e8dff5;
+            --green: #2d8a6e;
+            --green-light: #dff0ea;
+            --orange: #e07c3c;
+            --orange-light: #fdeee3;
+            --gold: #f5a623;
+            --gold-light: #fef3d6;
+            --bg-main: #f5f7fa;
+            --bg-card: #ffffff;
+            --text-primary: #0a1628;
+            --text-secondary: #3a4a5a;
+            --text-muted: #8e8e8e;
+            --border-color: #e8ecf0;
+            --shadow-sm: 0 2px 8px rgba(10, 22, 40, 0.06);
+            --shadow-md: 0 4px 16px rgba(10, 22, 40, 0.08);
+            --shadow-lg: 0 8px 32px rgba(10, 22, 40, 0.12);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-square: 14px;
+            --transition: all 0.25s ease;
+            --header-height: 60px;
+            --bottom-nav-height: 62px;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            direction: rtl;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 20px;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .header .logo .logo-box {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-gradient);
+            border-radius: var(--radius-square);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 3px 12px rgba(10, 22, 40, 0.15);
+        }
+
+        .header .logo .highlight {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .logo .badge-beta {
+            font-size: 8px;
+            background: var(--teal);
+            color: #fff;
+            padding: 1px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .header-search {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 20px;
+            position: relative;
+        }
+        .header-search input {
+            width: 100%;
+            padding: 8px 16px 8px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-main);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 13px;
+            color: var(--text-primary);
+            transition: var(--transition);
+            outline: none;
+        }
+        .header-search input:focus {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(74, 122, 191, 0.08);
+        }
+        .header-search .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .header-search .shortcut {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 9px;
+            color: var(--text-muted);
+            background: var(--bg-main);
+            padding: 1px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .header-actions .icon-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: var(--radius-sm);
+            position: relative;
+            transition: var(--transition);
+        }
+        .header-actions .icon-btn:hover {
+            background: var(--bg-main);
+        }
+        .header-actions .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 18px;
+            height: 18px;
+            background: var(--coral);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-actions .avatar-sm {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-square);
+            background: var(--bg-main);
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        .header-actions .avatar-sm:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+        .header-actions .btn-login {
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
+            padding: 5px 16px;
+            border-radius: var(--radius-sm);
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 3px 12px rgba(10, 22, 40, 0.10);
+        }
+        .header-actions .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 22, 40, 0.15);
+        }
+        .header-actions .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 5px 14px;
+            border-radius: var(--radius-sm);
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 500;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .header-actions .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* ===== DASHBOARD / COMMAND CENTER ===== */
+        .dashboard-bar {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .dashboard-bar .command-center {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .dashboard-bar .command-center .cmd-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--bg-main);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .dashboard-bar .command-center .cmd-item:hover {
+            border-color: var(--border-color);
+            background: #fff;
+            color: var(--text-primary);
+        }
+        .dashboard-bar .command-center .cmd-item i {
+            font-size: 14px;
+            color: var(--accent);
+        }
+        .dashboard-bar .command-center .cmd-item .key {
+            font-size: 9px;
+            color: var(--text-muted);
+            background: var(--bg-card);
+            padding: 0 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        .dashboard-bar .activity-feed {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .dashboard-bar .activity-feed .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .dashboard-bar .activity-feed .activity-item:hover {
+            color: var(--text-primary);
+        }
+        .dashboard-bar .activity-feed .activity-item .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dashboard-bar .activity-feed .activity-item .dot.green {
+            background: var(--green);
+        }
+        .dashboard-bar .activity-feed .activity-item .dot.gold {
+            background: var(--gold);
+        }
+        .dashboard-bar .activity-feed .activity-item .dot.coral {
+            background: var(--coral);
+        }
+        .dashboard-bar .activity-feed .activity-item .dot.blue {
+            background: var(--accent);
+        }
+
+        /* ===== STORIES ===== */
+        .stories-section {
+            padding: 10px 0 8px;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .stories-section::-webkit-scrollbar {
+            display: none;
+        }
+        .stories-scroll {
+            display: flex;
+            gap: 14px;
+            padding: 0 20px;
+            width: max-content;
+        }
+        .story-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        .story-item:hover {
+            transform: translateY(-2px);
+        }
+        .story-item:active {
+            transform: scale(0.94);
+        }
+        .story-box {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--radius-square);
+            padding: 3px;
+            background: linear-gradient(135deg, var(--accent), var(--teal), var(--coral));
+            box-shadow: var(--shadow-sm);
+        }
+        .story-box .inner {
+            width: 100%;
+            height: 100%;
+            border-radius: calc(var(--radius-square) - 3px);
+            background: var(--bg-main);
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #fff;
+        }
+        .story-box.seen {
+            background: #d1d5db;
+        }
+        .story-box .add-box {
+            width: 100%;
+            height: 100%;
+            border-radius: calc(var(--radius-square) - 3px);
+            background: #fff;
+            border: 2px dashed var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--accent);
+        }
+        .story-item .name {
+            font-size: 10px;
+            color: var(--text-secondary);
+            max-width: 70px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .story-item .name .live {
+            color: var(--coral);
+            font-weight: 700;
+            font-size: 8px;
+        }
+        .story-item .name .verified {
+            color: var(--teal);
+            font-size: 9px;
+        }
+
+        /* ===== QUICK ACCESS ===== */
+        .quick-access {
+            background: #fff;
+            padding: 8px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .quick-access::-webkit-scrollbar {
+            display: none;
+        }
+        .quick-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            min-width: 60px;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-main);
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+            border: 1px solid transparent;
+        }
+        .quick-item:hover {
+            border-color: var(--border-color);
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .quick-item .icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-square);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fff;
+        }
+        .quick-item .icon-box.teal {
+            background: var(--teal);
+        }
+        .quick-item .icon-box.blue {
+            background: var(--accent);
+        }
+        .quick-item .icon-box.coral {
+            background: var(--coral);
+        }
+        .quick-item .icon-box.purple {
+            background: var(--purple);
+        }
+        .quick-item .icon-box.green {
+            background: var(--green);
+        }
+        .quick-item .icon-box.orange {
+            background: var(--orange);
+        }
+        .quick-item .icon-box.gold {
+            background: var(--gold);
+        }
+        .quick-item .icon-box.pink {
+            background: #d9468b;
+        }
+        .quick-item .label {
+            font-size: 9px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        .main-wrapper {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 16px 20px 80px;
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 24px;
+        }
+
+        /* ===== SIDEBAR LEFT ===== */
+        .sidebar-left {
+            position: sticky;
+            top: calc(var(--header-height) + 16px);
+            align-self: start;
+        }
+
+        .profile-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .profile-card .avatar-large {
+            width: 76px;
+            height: 76px;
+            border-radius: var(--radius-square);
+            margin: 0 auto 10px;
+            background: var(--bg-main);
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--accent);
+            position: relative;
+        }
+        .profile-card .avatar-large .online-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            background: var(--green);
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+        .profile-card .avatar-large .edit-badge {
+            position: absolute;
+            bottom: -4px;
+            left: -4px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 2px solid #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .profile-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .profile-card .title {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .profile-card .university {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .profile-card .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin: 8px 0 12px;
+            flex-wrap: wrap;
+        }
+        .profile-card .badge-row .mini-badge {
+            font-size: 9px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            background: var(--bg-main);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .profile-card .badge-row .mini-badge.gold {
+            background: var(--gold-light);
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+        .profile-card .badge-row .mini-badge.teal {
+            background: var(--teal-light);
+            color: var(--teal);
+            border-color: var(--teal);
+        }
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            margin: 10px 0 14px;
+        }
+        .profile-stats .stat-item {
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .profile-stats .stat-item:hover {
+            transform: translateY(-2px);
+        }
+        .profile-stats .stat-item .num {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .profile-stats .stat-item .label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .profile-card .btn-follow {
+            width: 100%;
+            padding: 9px;
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .profile-card .btn-follow:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ===== TABS (اقدامات اختصاصی اساتید) ===== */
+        .tabs-container {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin-top: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .tabs-header::-webkit-scrollbar {
+            display: none;
+        }
+        .tabs-header .tab-btn {
+            flex: 1;
+            min-width: 60px;
+            padding: 8px 10px;
+            background: none;
+            border: none;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .tabs-header .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-main);
+        }
+        .tabs-header .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .tabs-header .tab-btn .tab-icon {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+        .tab-content {
+            padding: 10px 14px;
+        }
+        .tab-panel {
+            display: none;
+        }
+        .tab-panel.active {
+            display: block;
+        }
+
+        .tab-panel .list-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .tab-panel .list-item:last-child {
+            border-bottom: none;
+        }
+        .tab-panel .list-item:hover {
+            padding-right: 6px;
+            color: var(--accent);
+        }
+        .tab-panel .list-item .item-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--radius-square);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .tab-panel .list-item .item-icon.teal {
+            background: var(--teal);
+        }
+        .tab-panel .list-item .item-icon.coral {
+            background: var(--coral);
+        }
+        .tab-panel .list-item .item-icon.purple {
+            background: var(--purple);
+        }
+        .tab-panel .list-item .item-icon.gold {
+            background: var(--gold);
+        }
+        .tab-panel .list-item .item-icon.blue {
+            background: var(--accent);
+        }
+        .tab-panel .list-item .item-icon.green {
+            background: var(--green);
+        }
+        .tab-panel .list-item .item-icon.orange {
+            background: var(--orange);
+        }
+        .tab-panel .list-item .item-badge {
+            margin-right: auto;
+            font-size: 9px;
+            color: var(--text-muted);
+            background: var(--bg-main);
+            padding: 0 8px;
+            border-radius: 20px;
+        }
+        .tab-panel .list-item .item-badge.pending {
+            background: var(--gold-light);
+            color: var(--gold);
+        }
+        .tab-panel .list-item .item-badge.done {
+            background: var(--teal-light);
+            color: var(--teal);
+        }
+        .tab-panel .list-item .item-badge.urgent {
+            background: var(--coral-light);
+            color: var(--coral);
+        }
+
+        /* ===== FEED ===== */
+        .feed-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .create-post {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .create-post .avatar-sm {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-square);
+            background: var(--bg-main);
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        .create-post input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-main);
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+        .create-post input::placeholder {
+            color: var(--text-muted);
+        }
+        .create-post .post-options {
+            display: flex;
+            gap: 4px;
+        }
+        .create-post .post-options button {
+            background: none;
+            border: none;
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .create-post .post-options button:hover {
+            background: var(--bg-main);
+        }
+
+        /* ===== POSTS ===== */
+        .feed-post {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .feed-post:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            gap: 10px;
+        }
+        .post-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-square);
+            background: var(--bg-main);
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+            border: 2px solid var(--accent);
+        }
+        .post-user {
+            flex: 1;
+        }
+        .post-user .name {
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .post-user .name .verify {
+            color: var(--teal);
+            font-size: 12px;
+        }
+        .post-user .meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .post-user .meta .dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+        .post-user .meta .privacy {
+            background: var(--bg-main);
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 9px;
+        }
+        .post-user .meta .post-type {
+            font-size: 9px;
+            font-weight: 600;
+            padding: 0 8px;
+            border-radius: 4px;
+        }
+        .post-user .meta .post-type.article {
+            color: var(--purple);
+            background: var(--purple-light);
+        }
+        .post-user .meta .post-type.research {
+            color: var(--teal);
+            background: var(--teal-light);
+        }
+        .post-user .meta .post-type.event {
+            color: var(--coral);
+            background: var(--coral-light);
+        }
+        .post-user .meta .post-type.note {
+            color: var(--orange);
+            background: var(--orange-light);
+        }
+        .post-user .meta .post-type.request {
+            color: var(--gold);
+            background: var(--gold-light);
+        }
+        .post-user .meta .post-type.review {
+            color: var(--green);
+            background: var(--green-light);
+        }
+
+        .post-more {
+            color: var(--text-muted);
+            font-size: 16px;
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+        .post-more:hover {
+            background: var(--bg-main);
+        }
+
+        .post-content {
+            padding: 0 16px 12px;
+        }
+        .post-content h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .post-content p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .post-content .read-more {
+            color: var(--accent);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        .post-content .read-more:hover {
+            text-decoration: underline;
+        }
+
+        .post-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--bg-main);
+            background-size: cover;
+            background-position: center;
+        }
+        .post-gallery {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2px;
+            aspect-ratio: 16/9;
+        }
+        .post-gallery .gallery-item {
+            background: var(--bg-main);
+            background-size: cover;
+            background-position: center;
+        }
+        .post-gallery .gallery-item:first-child {
+            grid-row: span 2;
+        }
+        .post-gallery .gallery-more {
+            position: relative;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .post-actions-row {
+            display: flex;
+            align-items: center;
+            padding: 6px 16px 4px;
+            gap: 14px;
+        }
+        .post-actions-row button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+        .post-actions-row button:hover {
+            background: var(--bg-main);
+        }
+        .post-actions-row button:active {
+            transform: scale(0.85);
+        }
+        .post-actions-row button.liked {
+            color: var(--coral);
+        }
+        .post-actions-row button .count {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .post-actions-row .spacer {
+            flex: 1;
+        }
+
+        .post-likes {
+            padding: 0 16px 2px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .post-caption {
+            padding: 0 16px 6px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .post-caption .name {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-left: 6px;
+        }
+        .post-caption .hashtag {
+            color: var(--accent);
+        }
+        .post-comments {
+            padding: 0 16px 4px;
+            font-size: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .post-comments:hover {
+            color: var(--accent);
+        }
+        .post-time {
+            padding: 0 16px 10px;
+            font-size: 10px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .post-comment-input {
+            display: flex;
+            align-items: center;
+            padding: 6px 16px 12px;
+            gap: 8px;
+        }
+        .post-comment-input input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--bg-main);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+        }
+        .post-comment-input input::placeholder {
+            color: var(--text-muted);
+        }
+        .post-comment-input button {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+            opacity: 0.4;
+            transition: var(--transition);
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+        }
+        .post-comment-input button:hover {
+            background: var(--bg-main);
+        }
+        .post-comment-input button.active {
+            opacity: 1;
+        }
+
+        /* ===== SIDEBAR RIGHT ===== */
+        .sidebar-right {
+            position: sticky;
+            top: calc(var(--header-height) + 16px);
+            align-self: start;
+            display: grid;
+            gap: 16px;
+        }
+        .sidebar-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .sidebar-card h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .sidebar-card h4 .more {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--accent);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .sidebar-card h4 .more:hover {
+            color: var(--primary);
+        }
+
+        .suggest-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .suggest-item:last-child {
+            border-bottom: none;
+        }
+        .suggest-item .avatar-sm {
+            width: 34px;
+            height: 34px;
+            border-radius: var(--radius-square);
+            background: var(--bg-main);
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        .suggest-item .info {
+            flex: 1;
+        }
+        .suggest-item .info h5 {
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .suggest-item .info span {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+        .suggest-item .btn-follow-sm {
+            padding: 3px 12px;
+            border-radius: var(--radius-sm);
+            border: 1.5px solid var(--accent);
+            background: transparent;
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .suggest-item .btn-follow-sm:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .trend-item {
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .trend-item:last-child {
+            border-bottom: none;
+        }
+        .trend-item:hover .trend-tag {
+            color: var(--accent);
+        }
+        .trend-item .trend-tag {
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .trend-item .trend-count {
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+        .trend-item .trend-rank {
+            font-size: 10px;
+            color: var(--coral);
+            font-weight: 700;
+            margin-left: 6px;
+        }
+
+        .news-item {
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .news-item:hover strong {
+            color: var(--accent);
+        }
+        .news-item strong {
+            font-size: 13px;
+            transition: var(--transition);
+            display: block;
+        }
+        .news-item .news-meta {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .news-item .news-meta .tag {
+            background: var(--bg-main);
+            padding: 0 8px;
+            border-radius: 4px;
+            font-size: 8px;
+            color: var(--accent);
+        }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid var(--border-color);
+            height: var(--bottom-nav-height);
+            padding: 0 8px;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        .bottom-nav-inner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .bottom-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 9px;
+            gap: 2px;
+            padding: 4px 10px;
+            transition: var(--transition);
+            position: relative;
+            border-radius: var(--radius-sm);
+        }
+        .bottom-nav a:active {
+            background: var(--bg-main);
+        }
+        .bottom-nav a i {
+            font-size: 20px;
+            transition: var(--transition);
+        }
+        .bottom-nav a.active i {
+            color: var(--accent);
+        }
+        .bottom-nav a.active {
+            color: var(--accent);
+        }
+        .bottom-nav a .nav-badge {
+            position: absolute;
+            top: 0;
+            right: 2px;
+            width: 16px;
+            height: 16px;
+            background: var(--coral);
+            color: #fff;
+            font-size: 8px;
+            font-weight: 700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bottom-nav .add-btn {
+            background: var(--primary-gradient);
+            color: #fff !important;
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-square);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: -6px;
+            box-shadow: 0 4px 16px rgba(10, 22, 40, 0.2);
+        }
+        .bottom-nav .add-btn i {
+            font-size: 20px;
+            color: #fff !important;
+        }
+        .bottom-nav .add-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 300;
+            box-shadow: var(--shadow-md);
+            max-width: 90%;
+            text-align: center;
+            pointer-events: none;
+        }
+        .toast.show {
+            opacity: 1;
+            bottom: 90px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1100px) {
+            .main-wrapper {
+                grid-template-columns: 1fr 300px;
+                gap: 20px;
+            }
+            .sidebar-left {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --header-height: 52px;
+                --bottom-nav-height: 56px;
+            }
+            .header {
+                padding: 0 14px;
+                height: var(--header-height);
+            }
+            .header .logo {
+                font-size: 16px;
+                gap: 8px;
+            }
+            .header .logo .logo-box {
+                width: 28px;
+                height: 28px;
+                font-size: 13px;
+            }
+            .header .logo .badge-beta {
+                display: none;
+            }
+            .header-search {
+                display: none;
+            }
+            .header-actions .icon-btn {
+                font-size: 16px;
+                padding: 4px 6px;
+            }
+            .header-actions .avatar-sm {
+                width: 28px;
+                height: 28px;
+            }
+            .header-actions .btn-login,
+            .header-actions .btn-outline {
+                display: none;
+            }
+
+            .main-wrapper {
+                padding: 0 0 80px;
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .sidebar-right {
+                display: none;
+            }
+
+            .dashboard-bar {
+                padding: 6px 14px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 4px;
+            }
+            .dashboard-bar .command-center {
+                justify-content: center;
+            }
+            .dashboard-bar .activity-feed {
+                justify-content: center;
+                font-size: 10px;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .stories-section {
+                padding: 6px 0 4px;
+            }
+            .stories-scroll {
+                padding: 0 14px;
+                gap: 10px;
+            }
+            .story-box {
+                width: 56px;
+                height: 56px;
+            }
+            .story-item .name {
+                font-size: 9px;
+                max-width: 56px;
+            }
+
+            .quick-access {
+                padding: 6px 14px;
+                gap: 6px;
+            }
+            .quick-item {
+                min-width: 48px;
+                padding: 4px 6px;
+            }
+            .quick-item .icon-box {
+                width: 30px;
+                height: 30px;
+                font-size: 13px;
+            }
+            .quick-item .label {
+                font-size: 8px;
+            }
+
+            .feed-post {
+                margin: 0 8px 10px;
+                border-radius: var(--radius-sm);
+            }
+            .post-header {
+                padding: 10px 12px;
+            }
+            .post-avatar {
+                width: 30px;
+                height: 30px;
+            }
+            .post-user .name {
+                font-size: 12px;
+            }
+            .post-content {
+                padding: 0 12px 10px;
+            }
+            .post-content h3 {
+                font-size: 14px;
+            }
+            .post-content p {
+                font-size: 13px;
+            }
+            .post-actions-row {
+                padding: 4px 12px 2px;
+                gap: 10px;
+            }
+            .post-actions-row button {
+                font-size: 18px;
+            }
+            .post-likes {
+                padding: 0 12px 2px;
+                font-size: 12px;
+            }
+            .post-caption {
+                padding: 0 12px 4px;
+                font-size: 12px;
+            }
+            .post-comments {
+                padding: 0 12px 4px;
+                font-size: 11px;
+            }
+            .post-time {
+                padding: 0 12px 10px;
+                font-size: 9px;
+            }
+            .post-comment-input {
+                padding: 4px 12px 10px;
+                gap: 6px;
+            }
+            .post-comment-input input {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            .post-comment-input button {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+
+            .create-post {
+                margin: 0 8px 10px;
+                padding: 8px 12px;
+                border-radius: var(--radius-sm);
+            }
+            .create-post .avatar-sm {
+                width: 28px;
+                height: 28px;
+            }
+            .create-post input {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            .create-post .post-options button {
+                font-size: 14px;
+                padding: 4px 8px;
+            }
+
+            .bottom-nav {
+                display: block;
+            }
+
+            .post-gallery {
+                grid-template-columns: 1fr 1fr;
+            }
+            .post-gallery .gallery-item:first-child {
+                grid-row: auto;
+            }
+            .post-gallery .gallery-more {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .story-box {
+                width: 48px;
+                height: 48px;
+            }
+            .story-item .name {
+                font-size: 8px;
+                max-width: 48px;
+            }
+            .quick-item {
+                min-width: 42px;
+                padding: 4px 6px;
+            }
+            .quick-item .icon-box {
+                width: 26px;
+                height: 26px;
+                font-size: 12px;
+            }
+            .quick-item .label {
+                font-size: 7px;
+            }
+            .feed-post {
+                margin: 0 6px 8px;
+            }
+            .post-avatar {
+                width: 26px;
+                height: 26px;
+            }
+            .post-user .name {
+                font-size: 11px;
+            }
+            .post-actions-row button {
+                font-size: 16px;
+            }
+            .bottom-nav a i {
+                font-size: 18px;
+            }
+            .bottom-nav .add-btn {
+                width: 38px;
+                height: 38px;
+            }
+            .bottom-nav .add-btn i {
+                font-size: 18px;
+            }
+            .bottom-nav a {
+                padding: 2px 6px;
+                font-size: 7px;
+            }
+            .dashboard-bar .command-center .cmd-item {
+                font-size: 10px;
+                padding: 2px 8px;
+            }
+            .dashboard-bar .activity-feed .activity-item {
+                font-size: 9px;
+            }
+        }
+
+        @keyframes likeAnim {
+            0% {
+                transform: scale(1);
+            }
+            40% {
+                transform: scale(1.4);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .like-anim {
+            animation: likeAnim 0.35s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-main: #0d0d0d;
+                --bg-card: #1a1a1a;
+                --text-primary: #f0f0f0;
+                --text-secondary: #b0b0b0;
+                --text-muted: #8e8e8e;
+                --border-color: #2a2a2a;
+            }
+            .header {
+                background: rgba(13, 13, 13, 0.96);
+            }
+            .feed-post {
+                background: var(--bg-card);
+            }
+            .stories-section {
+                background: var(--bg-card);
+            }
+            .quick-access {
+                background: var(--bg-card);
+            }
+            .bottom-nav {
+                background: rgba(13, 13, 13, 0.96);
+            }
+            .sidebar-card {
+                background: var(--bg-card);
+            }
+            .profile-card {
+                background: var(--bg-card);
+            }
+            .tabs-container {
+                background: var(--bg-card);
+            }
+            .dashboard-bar {
+                background: var(--bg-card);
+            }
+            .create-post {
+                background: var(--bg-card);
+            }
+            .post-comment-input input {
+                background: #2a2a2a;
+                color: #f0f0f0;
+            }
+            .post-comment-input input::placeholder {
+                color: var(--text-muted);
+            }
+            .story-box .inner {
+                border-color: var(--bg-card);
+            }
+            .story-box .add-box {
+                background: var(--bg-card);
+            }
+            .quick-item {
+                background: #2a2a2a;
+            }
+            .quick-item:hover {
+                background: var(--bg-card);
+            }
+            .post-user .meta .privacy {
+                background: #2a2a2a;
+            }
+            .header-search input {
+                background: #2a2a2a;
+                color: #f0f0f0;
+                border-color: var(--border-color);
+            }
+            .header-search input:focus {
+                background: var(--bg-card);
+            }
+            .header-search .shortcut {
+                background: #2a2a2a;
+                border-color: var(--border-color);
+            }
+            .dashboard-bar .command-center .cmd-item {
+                background: #2a2a2a;
+            }
+            .dashboard-bar .command-center .cmd-item:hover {
+                background: var(--bg-card);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <a href="#" class="logo">
+            <div class="logo-box">اپ</div>
+            <div><span>اساتید</span> <span class="highlight">پورتال</span></div>
+            <span class="badge-beta">بتا</span>
+        </a>
+        <div class="header-search">
+            <input type="text" placeholder="جستجوی استاد، دانشگاه، تخصص..." id="desktopSearch" />
+            <i class="fas fa-search search-icon"></i>
+            <span class="shortcut">Ctrl+K</span>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="showToast('📬 پیام‌های شما')">
+                <i class="far fa-paper-plane"></i>
+                <span class="badge">۵</span>
+            </button>
+            <button class="icon-btn" onclick="showToast('🔔 اعلان‌های شما')">
+                <i class="far fa-bell"></i>
+                <span class="badge">۳</span>
+            </button>
+            <div class="avatar-sm" style="background-image:url('https://randomuser.me/api/portraits/men/32.jpg');" onclick="showToast('👤 پروفایل شما')"></div>
+            <button class="btn-login" onclick="showToast('🔑 ورود به حساب کاربری')">ورود</button>
+            <button class="btn-outline" onclick="showToast('📝 ثبت‌نام')">ثبت‌نام</button>
+        </div>
+    </header>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="dashboard-bar">
+        <div class="command-center">
+            <div class="cmd-item" onclick="showToast('⚡ فرمان‌های سریع')">
+                <i class="fas fa-terminal"></i>
+                <span>خط فرمان</span>
+                <span class="key">⌘+P</span>
+            </div>
+            <div class="cmd-item" onclick="showToast('📊 داشبورد مدیریت')">
+                <i class="fas fa-chart-pie"></i>
+                <span>داشبورد</span>
+            </div>
+            <div class="cmd-item" onclick="showToast('📝 پیش‌نویس‌ها')">
+                <i class="fas fa-pen-fancy"></i>
+                <span>پیش‌نویس</span>
+                <span style="background:var(--coral);color:#fff;font-size:8px;padding:0 6px;border-radius:10px;">۲</span>
+            </div>
+            <div class="cmd-item" onclick="showToast('📌 نشان‌ها')">
+                <i class="fas fa-tag"></i>
+                <span>نشان‌ها</span>
+            </div>
+        </div>
+        <div class="activity-feed">
+            <div class="activity-item" onclick="showToast('📊 گزارش امروز')">
+                <span class="dot green"></span>
+                <span>۳ فعالیت جدید</span>
+            </div>
+            <div class="activity-item" onclick="showToast('💬 پاسخ به شما')">
+                <span class="dot gold"></span>
+                <span>۲ پاسخ</span>
+            </div>
+            <div class="activity-item" onclick="showToast('👥 دنبال‌کننده جدید')">
+                <span class="dot coral"></span>
+                <span>+۴ دنبال‌کننده</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== STORIES ===== -->
+    <section class="stories-section">
+        <div class="stories-scroll">
+            <div class="story-item">
+                <div class="story-box"><div class="add-box"><i class="fas fa-plus"></i></div></div>
+                <span class="name">افزودن</span>
+            </div>
+            <div class="story-item">
+                <div class="story-box"><div class="inner" style="background-image:url('https://randomuser.me/api/portraits/men/45.jpg');"></div></div>
+                <span class="name">دکتر احمدی <span class="verified">✓</span></span>
+            </div>
+            <div class="story-item">
+                <div class="story-box"><div class="inner" style="background-image:url('https://randomuser.me/api/portraits/women/44.jpg');"></div></div>
+                <span class="name">دکتر موسوی</span>
+            </div>
+            <div class="story-item">
+                <div class="story-box"><div class="inner" style="background-image:url('https://randomuser.me/api/portraits/women/68.jpg');"></div></div>
+                <span class="name">دکتر کریمی <span class="verified">✓</span></span>
+            </div>
+            <div class="story-item">
+                <div class="story-box seen"><div class="inner" style="background-image:url('https://randomuser.me/api/portraits/men/75.jpg');"></div></div>
+                <span class="name">دکتر رضایی</span>
+            </div>
+            <div class="story-item">
+                <div class="story-box"><div class="inner" style="background-image:url('https://randomuser.me/api/portraits/women/33.jpg');"></div></div>
+                <span class="name">دکتر حسینی</span>
+            </div>
+            <div class="story-item">
+                <div class="story-box" style="background:linear-gradient(135deg,#e74c3c,#e6683c);">
+                    <div class="inner" style="background-image:url('https://randomuser.me/api/portraits/men/22.jpg');border-color:transparent;"></div>
+                </div>
+                <span class="name">دکتر زمانی <span class="live">● زنده</span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== QUICK ACCESS ===== -->
+    <section class="quick-access">
+        <div class="quick-item" onclick="showToast('👥 گروه‌های تخصصی')">
+            <div class="icon-box teal"><i class="fas fa-users"></i></div>
+            <span class="label">گروه‌ها</span>
+        </div>
+        <div class="quick-item" onclick="showToast('👨‍🏫 جامعه اساتید')">
+            <div class="icon-box blue"><i class="fas fa-user-graduate"></i></div>
+            <span class="label">اساتید</span>
+        </div>
+        <div class="quick-item" onclick="showToast('🏛️ دانشگاه‌ها')">
+            <div class="icon-box coral"><i class="fas fa-university"></i></div>
+            <span class="label">دانشگاه‌ها</span>
+        </div>
+        <div class="quick-item" onclick="showToast('🔬 پژوهش‌ها')">
+            <div class="icon-box purple"><i class="fas fa-microscope"></i></div>
+            <span class="label">پژوهش</span>
+        </div>
+        <div class="quick-item" onclick="showToast('📅 رویدادها')">
+            <div class="icon-box green"><i class="fas fa-calendar-alt"></i></div>
+            <span class="label">رویدادها</span>
+        </div>
+        <div class="quick-item" onclick="showToast('📰 رسانه علمی')">
+            <div class="icon-box orange"><i class="fas fa-newspaper"></i></div>
+            <span class="label">رسانه</span>
+        </div>
+        <div class="quick-item" onclick="showToast('❓ پرسش و پاسخ')">
+            <div class="icon-box gold"><i class="fas fa-question-circle"></i></div>
+            <span class="label">پرسش و پاسخ</span>
+        </div>
+        <div class="quick-item" onclick="showToast('🎓 دوره‌ها')">
+            <div class="icon-box pink"><i class="fas fa-chalkboard-teacher"></i></div>
+            <span class="label">دوره‌ها</span>
+        </div>
+    </section>
+
+    <!-- ===== MAIN WRAPPER ===== -->
+    <div class="main-wrapper">
+
+        <!-- ===== SIDEBAR LEFT ===== -->
+        <aside class="sidebar-left">
+            <div class="profile-card">
+                <div class="avatar-large" style="background-image:url('https://randomuser.me/api/portraits/men/32.jpg');">
+                    <span class="online-badge"></span>
+                    <div class="edit-badge" onclick="showToast('✏️ ویرایش پروفایل')"><i class="fas fa-pen"></i></div>
+                </div>
+                <h3>دکتر علی رضایی</h3>
+                <div class="title">استاد دانشگاه صنعتی شریف</div>
+                <div class="university">مهندسی کامپیوتر · هوش مصنوعی</div>
+                <div class="badge-row">
+                    <span class="mini-badge gold"><i class="fas fa-star"></i> استاد برجسته</span>
+                    <span class="mini-badge teal"><i class="fas fa-check-circle"></i> تأییدشده</span>
+                    <span class="mini-badge"><i class="fas fa-microscope"></i> ۳۴ پروژه</span>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item" onclick="showToast('👥 ۱٬۲۴۰ دنبال‌کننده')">
+                        <div class="num">۱٬۲۴۰</div>
+                        <div class="label">دنبال‌کننده</div>
+                    </div>
+                    <div class="stat-item" onclick="showToast('📝 ۱۸۰ پست')">
+                        <div class="num">۱۸۰</div>
+                        <div class="label">پست</div>
+                    </div>
+                    <div class="stat-item" onclick="showToast('📚 ۳۴ پروژه')">
+                        <div class="num">۳۴</div>
+                        <div class="label">پروژه</div>
+                    </div>
+                </div>
+                <button class="btn-follow" onclick="toggleFollow(this)"><i class="fas fa-user-plus"></i> دنبال کردن</button>
+            </div>
+
+            <!-- ===== TABS (اقدامات اختصاصی اساتید) ===== -->
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="tab-academic">
+                        <span class="tab-icon">📚</span>
+                        علمی
+                    </button>
+                    <button class="tab-btn" data-tab="tab-research">
+                        <span class="tab-icon">🔬</span>
+                        پژوهشی
+                    </button>
+                    <button class="tab-btn" data-tab="tab-admin">
+                        <span class="tab-icon">⚖️</span>
+                        اداری
+                    </button>
+                    <button class="tab-btn" data-tab="tab-collab">
+                        <span class="tab-icon">🤝</span>
+                        همکاری
+                    </button>
+                </div>
+
+                <div class="tab-content">
+                    <!-- TAB 1: امور علمی -->
+                    <div class="tab-panel active" id="tab-academic">
+                        <div class="list-item" onclick="showToast('📝 ثبت مقاله جدید')">
+                            <span class="item-icon teal"><i class="fas fa-file-alt"></i></span>
+                            <span>ثبت مقاله جدید</span>
+                            <span class="item-badge pending">در انتظار</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📋 داوری مقالات')">
+                            <span class="item-icon blue"><i class="fas fa-check-double"></i></span>
+                            <span>داوری مقالات</span>
+                            <span class="item-badge urgent">۳ درخواست</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📊 گزارش استنادات')">
+                            <span class="item-icon purple"><i class="fas fa-quote-right"></i></span>
+                            <span>گزارش استنادات</span>
+                            <span class="item-badge">۱۲۴ استناد</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📖 مقالات من')">
+                            <span class="item-icon gold"><i class="fas fa-book"></i></span>
+                            <span>مقالات من</span>
+                            <span class="item-badge">۸ مقاله</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📚 کتاب‌ها و تألیفات')">
+                            <span class="item-icon orange"><i class="fas fa-book-open"></i></span>
+                            <span>کتاب‌ها و تألیفات</span>
+                            <span class="item-badge">۳ کتاب</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('🎓 پایان‌نامه‌های راهنما')">
+                            <span class="item-icon green"><i class="fas fa-graduation-cap"></i></span>
+                            <span>پایان‌نامه‌های راهنما</span>
+                            <span class="item-badge">۱۲ جاری</span>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: امور پژوهشی -->
+                    <div class="tab-panel" id="tab-research">
+                        <div class="list-item" onclick="showToast('🔬 ثبت پروژه پژوهشی')">
+                            <span class="item-icon purple"><i class="fas fa-flask"></i></span>
+                            <span>ثبت پروژه پژوهشی</span>
+                            <span class="item-badge pending">جدید</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('🤝 درخواست همکاری پژوهشی')">
+                            <span class="item-icon blue"><i class="fas fa-handshake"></i></span>
+                            <span>درخواست همکاری پژوهشی</span>
+                            <span class="item-badge urgent">۲ درخواست</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('💰 درخواست گرنت پژوهشی')">
+                            <span class="item-icon gold"><i class="fas fa-coins"></i></span>
+                            <span>درخواست گرنت پژوهشی</span>
+                            <span class="item-badge">در حال بررسی</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📊 گزارش پژوهشی')">
+                            <span class="item-icon teal"><i class="fas fa-chart-bar"></i></span>
+                            <span>گزارش پژوهشی</span>
+                            <span class="item-badge">سالانه</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('🏆 جوایز پژوهشی')">
+                            <span class="item-icon coral"><i class="fas fa-trophy"></i></span>
+                            <span>جوایز پژوهشی</span>
+                            <span class="item-badge">۴ جایزه</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📋 داوری طرح‌های پژوهشی')">
+                            <span class="item-icon orange"><i class="fas fa-clipboard-check"></i></span>
+                            <span>داوری طرح‌های پژوهشی</span>
+                            <span class="item-badge urgent">۵ درخواست</span>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: امور اداری -->
+                    <div class="tab-panel" id="tab-admin">
+                        <div class="list-item" onclick="showToast('📋 فرصت‌های مطالعاتی')">
+                            <span class="item-icon blue"><i class="fas fa-plane"></i></span>
+                            <span>فرصت‌های مطالعاتی</span>
+                            <span class="item-badge">۳ درخواست</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📄 درخواست ترفیع')">
+                            <span class="item-icon gold"><i class="fas fa-arrow-up"></i></span>
+                            <span>درخواست ترفیع</span>
+                            <span class="item-badge pending">در انتظار</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📋 ارزیابی همکاران')">
+                            <span class="item-icon teal"><i class="fas fa-star"></i></span>
+                            <span>ارزیابی همکاران</span>
+                            <span class="item-badge urgent">۴ درخواست</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📝 گزارش عملکرد')">
+                            <span class="item-icon purple"><i class="fas fa-file-signature"></i></span>
+                            <span>گزارش عملکرد</span>
+                            <span class="item-badge">سال ۱۴۰۴</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📊 آمار آموزشی')">
+                            <span class="item-icon orange"><i class="fas fa-chart-pie"></i></span>
+                            <span>آمار آموزشی</span>
+                            <span class="item-badge">ترم جاری</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📋 درخواست مرخصی')">
+                            <span class="item-icon coral"><i class="fas fa-calendar-minus"></i></span>
+                            <span>درخواست مرخصی</span>
+                            <span class="item-badge">جدید</span>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: همکاری‌ها -->
+                    <div class="tab-panel" id="tab-collab">
+                        <div class="list-item" onclick="showToast('🤝 همکاری با دانشگاه‌ها')">
+                            <span class="item-icon blue"><i class="fas fa-university"></i></span>
+                            <span>همکاری با دانشگاه‌ها</span>
+                            <span class="item-badge">۵ دانشگاه</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('🏭 همکاری با صنعت')">
+                            <span class="item-icon green"><i class="fas fa-industry"></i></span>
+                            <span>همکاری با صنعت</span>
+                            <span class="item-badge">۳ قرارداد</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('🌐 همکاری بین‌المللی')">
+                            <span class="item-icon purple"><i class="fas fa-globe-americas"></i></span>
+                            <span>همکاری بین‌المللی</span>
+                            <span class="item-badge">۲ کشور</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📋 تفاهم‌نامه‌ها')">
+                            <span class="item-icon gold"><i class="fas fa-file-contract"></i></span>
+                            <span>تفاهم‌نامه‌ها</span>
+                            <span class="item-badge">۸ تفاهم‌نامه</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('👥 شبکه همکاران')">
+                            <span class="item-icon teal"><i class="fas fa-user-friends"></i></span>
+                            <span>شبکه همکاران</span>
+                            <span class="item-badge">۴۲ همکار</span>
+                        </div>
+                        <div class="list-item" onclick="showToast('📅 رویدادهای علمی')">
+                            <span class="item-icon coral"><i class="fas fa-calendar-check"></i></span>
+                            <span>رویدادهای علمی</span>
+                            <span class="item-badge">۳ رویداد</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ===== FEED ===== -->
+        <div class="feed-container">
+            <div class="create-post">
+                <div class="avatar-sm" style="background-image:url('https://randomuser.me/api/portraits/men/32.jpg');"></div>
+                <input type="text" placeholder="چیزی بنویسید، یک پرسش علمی مطرح کنید..." />
+                <div class="post-options">
+                    <button onclick="showToast('📷 افزودن تصویر')"><i class="fas fa-image"></i></button>
+                    <button onclick="showToast('🎬 افزودن ویدئو')"><i class="fas fa-video"></i></button>
+                    <button onclick="showToast('📊 ایجاد نظرسنجی')"><i class="fas fa-poll"></i></button>
+                    <button onclick="showToast('📝 نوشتن مقاله')"><i class="fas fa-file-alt"></i></button>
+                    <button onclick="showToast('❓ پرسش جدید')"><i class="fas fa-question-circle"></i></button>
+                </div>
+            </div>
+
+            <!-- POST 1: مقاله علمی -->
+            <div class="feed-post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background-image:url('https://randomuser.me/api/portraits/men/45.jpg');"></div>
+                    <div class="post-user">
+                        <div class="name">دکتر محمد احمدی <span class="verify"><i class="fas fa-check-circle"></i></span></div>
+                        <div class="meta">
+                            <i class="fas fa-university" style="font-size:10px;"></i> دانشگاه تهران
+                            <span class="dot"></span>
+                            <i class="fas fa-clock" style="font-size:10px;"></i> ۲ ساعت پیش
+                            <span class="privacy"><i class="fas fa-globe"></i> عمومی</span>
+                            <span class="post-type article">مقاله علمی</span>
+                        </div>
+                    </div>
+                    <div class="post-more" onclick="showToast('⚙️ گزینه‌های بیشتر')"><i class="fas fa-ellipsis-h"></i></div>
+                </div>
+                <div class="post-content">
+                    <h3>📄 آینده آموزش عالی در عصر هوش مصنوعی</h3>
+                    <p>هوش مصنوعی در حال تغییر بنیادین روش‌های آموزش، پژوهش و تعاملات علمی است. در این مقاله به بررسی چالش‌ها و فرصت‌های پیش روی دانشگاه‌ها پرداخته‌ام. نتایج نشان می‌دهد که دانشگاه‌های پیشرو با پذیرش هوش مصنوعی، مسیر تحول دیجیتال را با سرعت بیشتری طی می‌کنند... <span class="read-more" onclick="showToast('📖 ادامه مقاله')">ادامه مطلب</span></p>
+                </div>
+                <div class="post-image" style="background-image:url('https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="post-actions-row">
+                    <button onclick="toggleLike(this)"><i class="far fa-heart"></i> <span class="count">۱۲۴</span></button>
+                    <button onclick="showToast('💬 مشاهده کامنت‌ها')"><i class="far fa-comment"></i> <span class="count">۳۴</span></button>
+                    <button onclick="showToast('📤 اشتراک‌گذاری')"><i class="far fa-paper-plane"></i> <span class="count">۱۸</span></button>
+                    <div class="spacer"></div>
+                    <button onclick="showToast('💾 ذخیره مقاله')"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="post-likes">۱۲۴ پسند</div>
+                <div class="post-caption">
+                    <span class="name">دکتر محمد احمدی</span>
+                    آینده آموزش عالی در عصر هوش مصنوعی
+                    <span class="hashtag">#هوش_مصنوعی</span>
+                    <span class="hashtag">#آموزش_عالی</span>
+                </div>
+                <div class="post-comments" onclick="showToast('💬 مشاهده ۳۴ دیدگاه')">مشاهده ۳۴ دیدگاه</div>
+                <div class="post-time">۲ ساعت پیش</div>
+                <div class="post-comment-input">
+                    <input type="text" placeholder="نظر خود را بنویسید..." />
+                    <button onclick="showToast('✅ نظر ارسال شد')">ارسال</button>
+                </div>
+            </div>
+
+            <!-- POST 2: درخواست همکاری پژوهشی -->
+            <div class="feed-post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background-image:url('https://randomuser.me/api/portraits/women/44.jpg');"></div>
+                    <div class="post-user">
+                        <div class="name">دکتر سارا موسوی <span class="verify"><i class="fas fa-check-circle"></i></span></div>
+                        <div class="meta">
+                            <i class="fas fa-university" style="font-size:10px;"></i> دانشگاه علوم پزشکی
+                            <span class="dot"></span>
+                            <i class="fas fa-clock" style="font-size:10px;"></i> ۵ ساعت پیش
+                            <span class="privacy"><i class="fas fa-user-friends"></i> دوستان</span>
+                            <span class="post-type request">درخواست همکاری</span>
+                        </div>
+                    </div>
+                    <div class="post-more" onclick="showToast('⚙️ گزینه‌های بیشتر')"><i class="fas fa-ellipsis-h"></i></div>
+                </div>
+                <div class="post-content">
+                    <h3>🤝 درخواست همکاری پژوهشی در حوزه سلول‌های بنیادی</h3>
+                    <p>به دنبال همکار پژوهشی با تجربه در حوزه سلول‌های بنیادی و بیوتکنولوژی برای اجرای پروژه مشترک با دانشگاه علوم پزشکی تهران هستم. علاقه‌مندان لطفاً با من تماس بگیرند... <span class="read-more" onclick="showToast('📖 جزئیات درخواست')">ادامه مطلب</span></p>
+                </div>
+                <div class="post-image" style="background-image:url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="post-actions-row">
+                    <button onclick="toggleLike(this)"><i class="far fa-heart"></i> <span class="count">۸۹</span></button>
+                    <button onclick="showToast('💬 مشاهده کامنت‌ها')"><i class="far fa-comment"></i> <span class="count">۲۳</span></button>
+                    <button onclick="showToast('📤 اشتراک‌گذاری')"><i class="far fa-paper-plane"></i> <span class="count">۱۲</span></button>
+                    <div class="spacer"></div>
+                    <button onclick="showToast('💾 ذخیره درخواست')"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="post-likes">۸۹ پسند</div>
+                <div class="post-caption">
+                    <span class="name">دکتر سارا موسوی</span>
+                    درخواست همکاری پژوهشی در حوزه سلول‌های بنیادی
+                    <span class="hashtag">#پژوهش</span>
+                    <span class="hashtag">#سلول_بنیادی</span>
+                </div>
+                <div class="post-comments" onclick="showToast('💬 مشاهده ۲۳ دیدگاه')">مشاهده ۲۳ دیدگاه</div>
+                <div class="post-time">۵ ساعت پیش</div>
+                <div class="post-comment-input">
+                    <input type="text" placeholder="نظر خود را بنویسید..." />
+                    <button onclick="showToast('✅ نظر ارسال شد')">ارسال</button>
+                </div>
+            </div>
+
+            <!-- POST 3: داوری مقاله -->
+            <div class="feed-post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background-image:url('https://randomuser.me/api/portraits/women/68.jpg');"></div>
+                    <div class="post-user">
+                        <div class="name">دکتر ناهید کریمی <span class="verify"><i class="fas fa-check-circle"></i></span></div>
+                        <div class="meta">
+                            <i class="fas fa-university" style="font-size:10px;"></i> دانشگاه علامه
+                            <span class="dot"></span>
+                            <i class="fas fa-clock" style="font-size:10px;"></i> ۸ ساعت پیش
+                            <span class="privacy"><i class="fas fa-globe"></i> عمومی</span>
+                            <span class="post-type review">داوری</span>
+                        </div>
+                    </div>
+                    <div class="post-more" onclick="showToast('⚙️ گزینه‌های بیشتر')"><i class="fas fa-ellipsis-h"></i></div>
+                </div>
+                <div class="post-content">
+                    <h3>📋 درخواست داوری مقاله: «چالش‌های آموزش مجازی در علوم انسانی»</h3>
+                    <p>از اساتید محترم حوزه علوم انسانی دعوت می‌شود تا مقاله «چالش‌های آموزش مجازی در علوم انسانی» را داوری کنند. مهلت ارسال نظرات تا پایان هفته جاری... <span class="read-more" onclick="showToast('📖 جزئیات داوری')">ادامه مطلب</span></p>
+                </div>
+                <div class="post-image" style="background-image:url('https://images.unsplash.com/photo-1523050854058-8df90110c7f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="post-actions-row">
+                    <button onclick="toggleLike(this)"><i class="far fa-heart"></i> <span class="count">۶۷</span></button>
+                    <button onclick="showToast('💬 مشاهده کامنت‌ها')"><i class="far fa-comment"></i> <span class="count">۱۸</span></button>
+                    <button onclick="showToast('📤 اشتراک‌گذاری')"><i class="far fa-paper-plane"></i> <span class="count">۹</span></button>
+                    <div class="spacer"></div>
+                    <button onclick="showToast('💾 ذخیره')"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="post-likes">۶۷ پسند</div>
+                <div class="post-caption">
+                    <span class="name">دکتر ناهید کریمی</span>
+                    درخواست داوری مقاله
+                    <span class="hashtag">#داوری</span>
+                    <span class="hashtag">#علوم_انسانی</span>
+                </div>
+                <div class="post-comments" onclick="showToast('💬 مشاهده ۱۸ دیدگاه')">مشاهده ۱۸ دیدگاه</div>
+                <div class="post-time">۸ ساعت پیش</div>
+                <div class="post-comment-input">
+                    <input type="text" placeholder="نظر خود را بنویسید..." />
+                    <button onclick="showToast('✅ نظر ارسال شد')">ارسال</button>
+                </div>
+            </div>
+
+            <!-- POST 4: رویداد علمی -->
+            <div class="feed-post">
+                <div class="post-header">
+                    <div class="post-avatar" style="background-image:url('https://randomuser.me/api/portraits/men/75.jpg');"></div>
+                    <div class="post-user">
+                        <div class="name">دکتر سعید محمدی <span class="verify"><i class="fas fa-check-circle"></i></span></div>
+                        <div class="meta">
+                            <i class="fas fa-university" style="font-size:10px;"></i> دانشگاه صنعتی شریف
+                            <span class="dot"></span>
+                            <i class="fas fa-clock" style="font-size:10px;"></i> ۱۲ ساعت پیش
+                            <span class="privacy"><i class="fas fa-globe"></i> عمومی</span>
+                            <span class="post-type event">رویداد</span>
+                        </div>
+                    </div>
+                    <div class="post-more" onclick="showToast('⚙️ گزینه‌های بیشتر')"><i class="fas fa-ellipsis-h"></i></div>
+                </div>
+                <div class="post-content">
+                    <h3>🎓 همایش ملی هوش مصنوعی در آموزش</h3>
+                    <p>با افتخار اعلام می‌کنیم که همایش ملی هوش مصنوعی در آموزش با حضور اساتید برجسته کشور در اسفندماه برگزار خواهد شد. مهلت ارسال مقالات تا پایان بهمن ماه تمدید شده است... <span class="read-more" onclick="showToast('📖 جزئیات همایش')">ادامه مطلب</span></p>
+                </div>
+                <div class="post-image" style="background-image:url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="post-actions-row">
+                    <button onclick="toggleLike(this)"><i class="far fa-heart"></i> <span class="count">۱۵۶</span></button>
+                    <button onclick="showToast('💬 مشاهده کامنت‌ها')"><i class="far fa-comment"></i> <span class="count">۴۲</span></button>
+                    <button onclick="showToast('📤 اشتراک‌گذاری')"><i class="far fa-paper-plane"></i> <span class="count">۲۸</span></button>
+                    <div class="spacer"></div>
+                    <button onclick="showToast('💾 ذخیره رویداد')"><i class="far fa-bookmark"></i></button>
+                </div>
+                <div class="post-likes">۱۵۶ پسند</div>
+                <div class="post-caption">
+                    <span class="name">دکتر سعید محمدی</span>
+                    همایش ملی هوش مصنوعی در آموزش
+                    <span class="hashtag">#همایش</span>
+                    <span class="hashtag">#هوش_مصنوعی</span>
+                </div>
+                <div class="post-comments" onclick="showToast('💬 مشاهده ۴۲ دیدگاه')">مشاهده ۴۲ دیدگاه</div>
+                <div class="post-time">۱۲ ساعت پیش</div>
+                <div class="post-comment-input">
+                    <input type="text" placeholder="نظر خود را بنویسید..." />
+                    <button onclick="showToast('✅ نظر ارسال شد')">ارسال</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SIDEBAR RIGHT ===== -->
+        <aside class="sidebar-right">
+            <div class="sidebar-card">
+                <h4>👥 اساتید پیشنهادی <span class="more" onclick="showToast('👨‍🏫 مشاهده همه اساتید')">مشاهده همه</span></h4>
+                <div class="suggest-item">
+                    <div class="avatar-sm" style="background-image:url('https://randomuser.me/api/portraits/men/22.jpg');"></div>
+                    <div class="info"><h5>دکتر امیر زمانی</h5><span>دانشگاه صنعتی شریف</span></div>
+                    <button class="btn-follow-sm" onclick="toggleFollow(this)">دنبال کن</button>
+                </div>
+                <div class="suggest-item">
+                    <div class="avatar-sm" style="background-image:url('https://randomuser.me/api/portraits/women/55.jpg');"></div>
+                    <div class="info"><h5>دکتر لیلا نادری</h5><span>دانشگاه علوم پزشکی</span></div>
+                    <button class="btn-follow-sm" onclick="toggleFollow(this)">دنبال کن</button>
+                </div>
+                <div class="suggest-item">
+                    <div class="avatar-sm" style="background-image:url('https://randomuser.me/api/portraits/men/62.jpg');"></div>
+                    <div class="info"><h5>دکتر حسن رحیمی</h5><span>دانشگاه علامه</span></div>
+                    <button class="btn-follow-sm" onclick="toggleFollow(this)">دنبال کن</button>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h4>🔥 موضوعات داغ <span class="more" onclick="showToast('🔥 مشاهده همه موضوعات')">بیشتر</span></h4>
+                <div class="trend-item" onclick="showToast('🔍 مشاهده #هوش_مصنوعی')">
+                    <div class="trend-tag"><span class="trend-rank">۱</span> #هوش_مصنوعی</div>
+                    <div class="trend-count">۱۲۵ پست</div>
+                </div>
+                <div class="trend-item" onclick="showToast('🔍 مشاهده #پژوهش')">
+                    <div class="trend-tag"><span class="trend-rank">۲</span> #پژوهش</div>
+                    <div class="trend-count">۹۸ پست</div>
+                </div>
+                <div class="trend-item" onclick="showToast('🔍 مشاهده #داوری')">
+                    <div class="trend-tag"><span class="trend-rank">۳</span> #داوری</div>
+                    <div class="trend-count">۷۶ پست</div>
+                </div>
+                <div class="trend-item" onclick="showToast('🔍 مشاهده #همکاری')">
+                    <div class="trend-tag"><span class="trend-rank">۴</span> #همکاری_پژوهشی</div>
+                    <div class="trend-count">۵۴ پست</div>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h4>📰 آخرین اخبار علمی <span class="more" onclick="showToast('📰 مشاهده همه اخبار')">بیشتر</span></h4>
+                <div class="news-item" onclick="showToast('📰 رتبه‌بندی جدید دانشگاه‌ها')">
+                    <strong>رتبه‌بندی جدید دانشگاه‌های ایران اعلام شد</strong>
+                    <div class="news-meta"><span>۲ ساعت پیش</span><span class="tag">دانشگاه</span></div>
+                </div>
+                <div class="news-item" onclick="showToast('📰 مرکز تحقیقات هوش مصنوعی')">
+                    <strong>افتتاح مرکز تحقیقات هوش مصنوعی در دانشگاه تهران</strong>
+                    <div class="news-meta"><span>۵ ساعت پیش</span><span class="tag">فناوری</span></div>
+                </div>
+                <div class="news-item" onclick="showToast('📰 همایش علوم شناختی')">
+                    <strong>همایش بین‌المللی علوم شناختی برگزار می‌شود</strong>
+                    <div class="news-meta"><span>۸ ساعت پیش</span><span class="tag">رویداد</span></div>
+                </div>
+            </div>
+
+            <div class="sidebar-card" style="background:var(--primary-gradient);color:#fff;border-color:transparent;">
+                <h4 style="color:#fff;">📊 جامعه اساتید پورتال</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+                    <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:var(--radius-sm);padding:6px;">
+                        <div style="font-size:20px;font-weight:800;">۲۵K</div>
+                        <div style="font-size:9px;opacity:0.7;">اساتید</div>
+                    </div>
+                    <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:var(--radius-sm);padding:6px;">
+                        <div style="font-size:20px;font-weight:800;">۳۵۰+</div>
+                        <div style="font-size:9px;opacity:0.7;">دانشگاه</div>
+                    </div>
+                    <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:var(--radius-sm);padding:6px;">
+                        <div style="font-size:20px;font-weight:800;">۱٫۲K</div>
+                        <div style="font-size:9px;opacity:0.7;">تخصص</div>
+                    </div>
+                    <div style="text-align:center;background:rgba(255,255,255,0.06);border-radius:var(--radius-sm);padding:6px;">
+                        <div style="font-size:20px;font-weight:800;">۸K</div>
+                        <div style="font-size:9px;opacity:0.7;">محتوا</div>
+                    </div>
+                </div>
+                <div style="margin-top:10px;display:flex;gap:6px;">
+                    <button style="flex:1;background:rgba(255,255,255,0.15);border:none;color:#fff;padding:6px;border-radius:var(--radius-sm);font-family:inherit;font-size:11px;cursor:pointer;" onclick="showToast('✅ عضویت در جامعه')">عضویت</button>
+                    <button style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:6px;border-radius:var(--radius-sm);font-family:inherit;font-size:11px;cursor:pointer;" onclick="showToast('ℹ️ درباره ما')">درباره</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- ===== BOTTOM NAV ===== -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-inner">
+            <a href="#" class="active" onclick="return false;"><i class="fas fa-home"></i><span>خانه</span></a>
+            <a href="#" onclick="showToast('🔍 جستجوی اساتید'); return false;"><i class="fas fa-search"></i><span>جستجو</span></a>
+            <a href="#" onclick="showToast('📝 ایجاد پست جدید'); return false;" class="add-btn"><i class="fas fa-plus"></i></a>
+            <a href="#" onclick="showToast('🔔 اعلان‌ها'); return false;"><i class="fas fa-heart"></i><span>اعلان‌ها</span><span class="nav-badge">۸</span></a>
+            <a href="#" onclick="showToast('👤 پروفایل شما'); return false;"><i class="fas fa-user"></i><span>پروفایل</span></a>
+        </div>
+    </nav>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        let toastTimeout;
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2000);
+            if (navigator.vibrate) navigator.vibrate(6);
+        }
+
+        function toggleLike(btn) {
+            const icon = btn.querySelector('i');
+            const countSpan = btn.querySelector('.count');
+            const isLiked = btn.classList.contains('liked');
+            if (isLiked) {
+                btn.classList.remove('liked');
+                icon.className = 'far fa-heart';
+                if (countSpan) { let c = parseInt(countSpan.textContent) || 0;
+                    countSpan.textContent = c > 0 ? c - 1 : 0; }
+            } else {
+                btn.classList.add('liked');
+                icon.className = 'fas fa-heart';
+                if (countSpan) { let c = parseInt(countSpan.textContent) || 0;
+                    countSpan.textContent = c + 1; }
+                icon.classList.add('like-anim');
+                setTimeout(() => icon.classList.remove('like-anim'), 350);
+                if (navigator.vibrate) navigator.vibrate(8);
+            }
+            const post = btn.closest('.feed-post');
+            const likesEl = post?.querySelector('.post-likes');
+            if (likesEl) {
+                const likeButtons = post?.querySelectorAll('.post-actions-row button .count');
+                let sum = 0;
+                likeButtons?.forEach(el => { let v = parseInt(el.textContent) || 0; if (v > sum) sum = v; });
+                if (sum > 0) likesEl.textContent = sum + ' پسند';
+            }
+        }
+
+        function toggleFollow(btn) {
+            const isFollowing = btn.classList.toggle('following');
+            if (isFollowing) {
+                btn.innerHTML = '<i class="fas fa-check"></i> دنبال می‌کنید';
+                btn.style.background = 'var(--teal)';
+                btn.style.color = '#fff';
+                btn.style.borderColor = 'var(--teal)';
+                showToast('✅ شروع به دنبال کردن کردید');
+            } else {
+                btn.innerHTML = 'دنبال کردن';
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.style.borderColor = '';
+                showToast('❌ دنبال کردن لغو شد');
+            }
+        }
+
+        // Stories
+        document.querySelectorAll('.story-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const box = this.querySelector('.story-box');
+                if (box && !box.classList.contains('seen') && !box.querySelector('.add-box')) {
+                    box.classList.add('seen');
+                }
+                const name = this.querySelector('.name')?.textContent?.trim() || 'استاد';
+                showToast(`📸 مشاهده استوری ${name}`);
+                if (navigator.vibrate) navigator.vibrate(10);
+            });
+        });
+
+        // Comments
+        document.querySelectorAll('.post-comment-input input').forEach(input => {
+            input.addEventListener('input', function() {
+                const btn = this.parentElement.querySelector('button');
+                if (this.value.trim().length > 0) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && this.value.trim()) {
+                    const btn = this.parentElement.querySelector('button');
+                    if (btn.classList.contains('active')) {
+                        showToast('✅ نظر ارسال شد');
+                        this.value = '';
+                        btn.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.dataset.tab;
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                document.getElementById(tabId)?.classList.add('active');
+            });
+        });
+
+        // Bottom nav
+        document.querySelectorAll('.bottom-nav a:not(.add-btn)').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (!this.getAttribute('onclick')) {
+                    e.preventDefault();
+                    document.querySelectorAll('.bottom-nav a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                const searchInput = document.getElementById('desktopSearch');
+                if (searchInput) { searchInput.focus();
+                    showToast('🔍 جستجو فعال شد'); }
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                e.preventDefault();
+                showToast('⚡ خط فرمان باز شد');
+            }
+            if (e.key === 'Escape') { document.activeElement?.blur(); }
+        });
+
+        document.querySelector('.header-search .search-icon')?.addEventListener('click', function() {
+            document.getElementById('desktopSearch')?.focus();
+        });
+
+        console.log('📚 اساتید پورتال - نسخه اختصاصی اساتید');
+        console.log('🎯 اقدامات اختصاصی اساتید:');
+        console.log('  📝 ثبت و داوری مقالات');
+        console.log('  🔬 پروژه‌های پژوهشی');
+        console.log('  🤝 درخواست همکاری');
+        console.log('  📋 ارزیابی همکاران');
+        console.log('  🎓 پایان‌نامه‌ها');
+        console.log('  🌐 همکاری بین‌المللی');
+        console.log('  📊 گزارشات و آمار');
+        console.log('  💰 گرنت‌های پژوهشی');
+    </script>
+
+</body>
+</html>
