@@ -1,0 +1,40 @@
+name: Chatiha Integrated UI
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch UI
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('chatiha/index.html')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('.main{display:flex;flex-direction:column;min-width:0;background:#f7f9fc}', '.main{display:flex;flex-direction:column;min-width:0;background:#f7f9fc;position:relative;overflow:hidden}')
+          a=s.find('.view{display:none;position:fixed;')
+          b=s.find('.view.open{display:block}',a)
+          if a>=0 and b>a:
+            s=s[:a]+'.view{display:none;position:absolute;inset:0;background:#f6f9fd;z-index:20;box-shadow:none;overflow:hidden}.view.open{display:block}'+s[b+len('.view.open{display:block}'):]
+          s=s.replace('.view{right:364px;left:0}', '.view{inset:0}')
+          s=s.replace('.view{right:321px;left:0}', '.view{inset:0}')
+          s=s.replace('.view{right:0;left:0;box-shadow:none}', '.view{inset:0;box-shadow:none}')
+          css='''<style>.viewbody{padding:22px;overflow:auto;height:calc(100% - 68px);background:#f6f9fd}.viewbody:before{content:"";display:block;height:1px}.richhero{display:flex;align-items:center;justify-content:space-between;gap:18px;max-width:1080px;margin:0 auto 15px;padding:22px;background:#fff;border:1px solid #dfe7f1;border-radius:20px;box-shadow:0 8px 24px rgba(35,58,90,.05)}.richhero h3{margin:6px 0 4px;font-size:20px}.richhero p{margin:0;color:#718096;font-size:10px;line-height:2}.eyebrow{font-size:8px;color:#246bfe;font-weight:700}.richhero button{background:#246bfe;color:#fff;border:0;border-radius:11px;padding:10px 15px;font-size:9px;white-space:nowrap}.richgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:1080px;margin:auto}.richcard{background:#fff;border:1px solid #dfe7f1;border-radius:17px;padding:17px;min-height:175px;box-shadow:0 6px 20px rgba(35,58,90,.045)}.richicon{width:43px;height:43px;border-radius:12px;background:#edf3ff;color:#246bfe;display:grid;place-items:center;font-size:8px;font-weight:700;margin-bottom:12px}.richcard b{display:block;font-size:12px}.richcard small{display:block;color:#718096;font-size:8px;line-height:1.9;margin-top:4px}.minirow{display:flex;justify-content:space-between;border-top:1px solid #edf1f5;padding-top:8px;margin-top:9px;font-size:8px}.minirow span{color:#8a97a7}.softbtn{margin-top:13px;border:1px solid #d7e3f6;background:#f5f8fc;color:#246bfe;border-radius:9px;padding:7px 10px;font-size:8px}.storyrow{display:flex;gap:5px;margin-top:13px}.storyrow i{width:30px;height:30px;border-radius:50%;background:#edf3ff;color:#246bfe;display:grid;place-items:center;font-size:8px;font-style:normal}.progress{height:6px;background:#eef2f7;border-radius:99px;margin-top:13px;overflow:hidden}.progress i{display:block;height:100%;background:#246bfe;border-radius:99px}.settingshero{display:flex;align-items:center;gap:13px;max-width:1080px;margin:0 auto 13px;padding:18px;background:#fff;border:1px solid #dfe7f1;border-radius:19px}.settingavatar{width:54px;height:54px;border-radius:16px;background:#edf3ff;color:#246bfe;display:grid;place-items:center;font-size:20px;font-weight:700}.settingshero>div:nth-child(2){flex:1}.settingshero h3{margin:5px 0 3px;font-size:18px}.settingshero p{margin:0;color:#718096;font-size:9px}.settingshero button{background:#246bfe;color:#fff;border:0;border-radius:10px;padding:9px 13px;font-size:8px}.settingsgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:1080px;margin:auto}.settingcard{background:#fff;border:1px solid #dfe7f1;border-radius:17px;padding:17px}.settingcard>b{display:block;font-size:12px;margin-bottom:12px}.settingcard label{display:block;font-size:8px;font-weight:700;margin-bottom:9px}.settingcard input{display:block;width:100%;height:40px;margin-top:5px;border:1px solid #dfe7f1;border-radius:9px;background:#f8fafc;padding:0 9px}.settingline{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #edf1f5;padding:11px 0;font-size:9px}.settingline small{display:block;color:#718096;font-size:7px;margin-top:3px}.settingline em{font-style:normal;color:#20a779;background:#edf9f4;border-radius:99px;padding:4px 7px;font-size:7px}.settingline button{border:0;background:#edf3ff;color:#246bfe;border-radius:8px;padding:6px 8px;font-size:7px}@media(max-width:760px){.richhero,.settingshero{align-items:flex-start;flex-direction:column}.richgrid,.settingsgrid{grid-template-columns:1fr}.viewbody{padding:12px}}</style>'''
+          if '.richhero{' not in s:
+            s=s.replace('</style></head>', '</style>'+css+'</head>')
+          js='''<script>(function(){const data={social:['شبکه اجتماعی','جامعه، محتوا و ارتباطات عمومی',['استوری‌ها','کانال‌ها','صفحات عمومی','گروه‌ها']],calls:['تماس‌ها','ارتباط صوتی و تصویری',['تماس صوتی','تماس تصویری','تماس‌های اخیر']],files:['فایل‌ها','مرکز اسناد و رسانه',['تصاویر و ویدئو','اسناد کاری','لینک‌های ذخیره‌شده']],org:['فضای سازمانی','همکاری، پروژه و فرآیند',['سازمان‌ها','تیم‌ها','پروژه‌ها','جلسه‌ها','فرم‌ها','گزارش‌ها']],ai:['دستیار هوشمند','هوش مصنوعی در دل چتی‌ها',['خلاصه گفتگو','جست‌وجوی هوشمند','استخراج کارها','دستیار سازمانی']]};const old=window.openView;window.openView=function(k){old(k);if(data[k]){const d=data[k];document.getElementById('viewTitle').textContent=d[0];document.getElementById('viewBody').innerHTML='<div class="richhero"><div><span class="eyebrow">چتی‌ها</span><h3>'+d[0]+'</h3><p>'+d[1]+'؛ همه ابزارهای این بخش در همان محیط اصلی چتی‌ها در دسترس هستند.</p></div><button onclick="toast(\'عملیات جدید آماده است\')">ایجاد مورد جدید</button></div><div class="richgrid">'+d[2].map((x,i)=>'<div class="richcard"><div class="richicon">'+x.slice(0,4)+'</div><b>'+x+'</b><small>مدیریت و مشاهده اطلاعات مرتبط با '+x+' در فضای یکپارچه چتی‌ها.</small><div class="minirow"><strong>آخرین فعالیت</strong><span>'+(i+2)+' مورد جدید</span></div><button class="softbtn" onclick="toast(\''+x+' آماده است\')">مشاهده بخش</button></div>').join('')+'</div>';}};const oldSettings=window.openView;})();</script>'''
+          if 'const data={social:' not in s:
+            s=s.replace('</script></body></html>', js+'</script></body></html>')
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add chatiha/index.html
+          git diff --cached --quiet || (git commit -m "fix(chatiha): integrate internal views into chat theme" && git push)
