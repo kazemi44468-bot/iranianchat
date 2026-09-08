@@ -4,7 +4,7 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -19,6 +19,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Repair Chatiha UI before deployment
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('chatiha/index.html')
+          s = p.read_text(encoding='utf-8')
+          s = re.sub(r'\s*<div class="chatiha-auth-gallery"[^>]*>.*?</div>\s*', '\n', s, count=1, flags=re.S)
+          gallery = '''\n      <section class="chatiha-app-gallery" aria-label="تصاویر چتی‌ها">\n        <div class="chatiha-app-gallery-head"><b>چتی‌ها</b><span>فضای ارتباطی ایرانیان چت</span></div>\n        <div class="chatiha-app-gallery-grid">\n          <a href="../assets/images/pic1.png" target="_blank" rel="noopener"><img src="../assets/images/pic1.png" alt="چتی‌ها ۱"></a>\n          <a href="../assets/images/pic2.png" target="_blank" rel="noopener"><img src="../assets/images/pic2.png" alt="چتی‌ها ۲"></a>\n          <a href="../assets/images/pic3.png" target="_blank" rel="noopener"><img src="../assets/images/pic3.png" alt="چتی‌ها ۳"></a>\n        </div>\n      </section>\n'''
+          if 'class="chatiha-app-gallery"' not in s:
+              s = s.replace('    <main class="main">', gallery + '    <main class="main">', 1)
+          style = '''\n<style id="chatiha-gallery-repair">\n.chatiha-auth-gallery{display:none!important}\n.chatiha-app-gallery{margin:8px 13px 0;padding:10px;border:1px solid var(--line);border-radius:16px;background:#ffffffd9;box-shadow:0 10px 28px #315c8810}\n.chatiha-app-gallery-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px;font-size:9px}.chatiha-app-gallery-head b{font-size:11px}.chatiha-app-gallery-head span{color:var(--muted)}\n.chatiha-app-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.chatiha-app-gallery-grid a{display:block;overflow:hidden;border-radius:11px;border:1px solid var(--line)}.chatiha-app-gallery-grid img{display:block;width:100%;height:72px;object-fit:cover;transition:transform .2s}.chatiha-app-gallery-grid a:hover img{transform:scale(1.04)}\n@media(max-width:1050px){.chatiha-app-gallery{display:none}}\n</style>\n'''
+          if 'id="chatiha-gallery-repair"' not in s:
+              s = s.replace('</head>', style + '</head>', 1)
+          repair = r'''\n<script id="chatiha-interaction-repair">\n(function(){\n  const q=s=>document.querySelector(s), qa=s=>Array.from(document.querySelectorAll(s));\n  const views={social:['اجتماعی','فید، استوری، کانال و جامعه‌ها'],calls:['تماس‌ها','تماس صوتی و تصویری'],files:['فایل‌ها','مرکز فایل و رسانه'],org:['سازمانی','فضای کاری و تیم‌ها'],ai:['دستیار هوشمند','هوش مصنوعی در دل پیام‌رسان'],settings:['تنظیمات','تنظیمات حساب و حریم خصوصی']};\n  function openView(k){const w=q('#workspace');if(!w)return;if(k==='chats'){w.classList.remove('open');qa('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view==='chats'));return}const v=views[k]||views.social;const t=q('#wsTitle'),sub=q('#wsSub'),body=q('#wsbody');if(t)t.textContent=v[0];if(sub)sub.textContent=v[1];if(body)body.innerHTML='<div class="hero"><div><span style="font-size:8px;color:#2478ef">فضای چتی‌ها</span><h3>'+v[0]+'</h3><p>'+v[1]+'؛ این بخش برای ادامه توسعه رابط آماده است.</p></div></div>';w.classList.add('open');qa('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===k));}\n  document.addEventListener('click',function(e){const v=e.target.closest('[data-view]');if(v){e.preventDefault();openView(v.dataset.view);return}const c=e.target.closest('.chat');if(c){qa('.chat').forEach(x=>x.classList.remove('active'));c.classList.add('active');const n=c.dataset.name,i=c.dataset.img,st=c.dataset.status;if(q('#headName'))q('#headName').textContent=n||'';if(q('#headStatus'))q('#headStatus').textContent='● '+(st||'آنلاین');if(q('#headImg')&&i)q('#headImg').src=i;return}const f=e.target.closest('.filter');if(f){qa('.filter').forEach(x=>x.classList.remove('active'));f.classList.add('active');return}const a=e.target.closest('[data-action]');if(a){const m={call:'در حال برقراری تماس صوتی…',video:'در حال آماده‌سازی تماس تصویری…',attach:'انتخاب فایل و رسانه',emoji:'پنل شکلک‌ها آماده شد',mute:'اعلان‌های این گفتگو بی‌صدا شد',more:'گزینه‌های بیشتر',search:'جست‌وجو آماده شد',new:'گفت‌وگوی جدید آماده است'}[a.dataset.action];if(m&&typeof window.toast==='function')window.toast(m);}});\n  const close=q('#closews');if(close)close.addEventListener('click',()=>{const w=q('#workspace');if(w)w.classList.remove('open');qa('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view==='chats'))});\n})();\n</script>\n'''
+          if 'id="chatiha-interaction-repair"' not in s:
+              s = s.replace('</body>', repair + '</body>', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add chatiha/index.html
+          git diff --cached --quiet || (git commit -m 'fix: repair Chatiha UI' && git push)
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
