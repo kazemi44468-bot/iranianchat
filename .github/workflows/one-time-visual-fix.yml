@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Move footer decoration inside footer
+      - name: Keep footer decoration inside footer at the bottom
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -21,10 +21,10 @@ jobs:
           html = path.read_text(encoding='utf-8')
           marker = '<div class="iranianchat-bac3-footer" aria-hidden="true"></div>'
           html = html.replace(marker, '')
-          html = html.replace('</footer>', marker + '</footer>', 1)
+          html = html.replace('</div></footer>', marker + '</div></footer>', 1)
           path.write_text(html, encoding='utf-8')
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git diff --cached --quiet || (git commit -m 'fix: place bac3 inside footer' && git push)
+          git diff --cached --quiet || (git commit -m 'fix: keep bac3 inside footer at bottom' && git push)
