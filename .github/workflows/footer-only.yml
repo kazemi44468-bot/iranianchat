@@ -1,0 +1,36 @@
+name: Footer-only refinement
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  refine:
+    if: github.event.head_commit.message != 'chore: refine IranianChat footer logo'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Edit only footer CSS
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = ".footer-brand-lockup{display:flex;align-items:center;gap:13px}.footer-brand-mark{width:64px;height:64px;flex:none;border-radius:19px;overflow:hidden;background:#fff;border:1px solid #dbe7f2;box-shadow:0 12px 28px #24527b14}.footer-brand-mark img{display:block;width:100%;height:100%;object-fit:cover}"
+          new = ".footer-brand-lockup{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}.footer-brand-mark{width:128px;height:128px;flex:none;border-radius:28px;overflow:hidden;background:#fff;border:1px solid #dbe7f2;box-shadow:0 12px 28px #24527b14}.footer-brand-mark img{display:block;width:100%;height:100%;object-fit:cover}.footer-brand-lockup>div:last-child{text-align:center}"
+          assert s.count(old) == 1
+          s = s.replace(old, new, 1)
+          old_mobile = ".footer-brand-mark{width:58px;height:58px;border-radius:17px}"
+          new_mobile = ".footer-brand-mark{width:116px;height:116px;border-radius:26px}"
+          assert s.count(old_mobile) == 1
+          s = s.replace(old_mobile, new_mobile, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit only index.html
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          test "$(git diff --cached --name-only)" = "index.html"
+          git commit -m "chore: refine IranianChat footer logo"
+          git push
