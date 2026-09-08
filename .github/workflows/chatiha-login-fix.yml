@@ -127,7 +127,6 @@ jobs:
               html = html.replace("</section>", bottom + "</section>", 1)
 
           path.write_text(html, encoding="utf-8")
-          PY
 
           root=Path("index.html")
           root_html=root.read_text(encoding="utf-8")
