@@ -1736,9 +1736,9 @@
 
 <style id="chatiha-gallery-repair">
 .chatiha-auth-gallery{display:none!important}
-.chatiha-app-gallery{margin:8px 13px 0;padding:10px;border:1px solid var(--line);border-radius:16px;background:#ffffffd9;box-shadow:0 10px 28px #315c8810}
-.chatiha-app-gallery-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px;font-size:9px}.chatiha-app-gallery-head b{font-size:11px}.chatiha-app-gallery-head span{color:var(--muted)}
-.chatiha-app-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.chatiha-app-gallery-grid a{display:block;overflow:hidden;border-radius:11px;border:1px solid var(--line)}.chatiha-app-gallery-grid img{display:block;width:100%;height:72px;object-fit:cover;transition:transform .2s}.chatiha-app-gallery-grid a:hover img{transform:scale(1.04)}
+.chatiha-app-gallery{margin:12px 13px 13px;padding:10px;border:1px solid var(--line);border-radius:16px;background:#ffffffd9;box-shadow:0 10px 28px #315c8810}
+.chatiha-app-gallery-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:9px}.chatiha-app-gallery-head b{font-size:11px}.chatiha-app-gallery-head span{color:var(--muted);font-size:8px}
+.chatiha-app-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.chatiha-app-gallery-grid a{display:block;overflow:hidden;aspect-ratio:1.35;border-radius:11px;border:1px solid var(--line)}.chatiha-app-gallery-grid img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .2s}.chatiha-app-gallery-grid a:hover img{transform:scale(1.04)}
 @media(max-width:1050px){.chatiha-app-gallery{display:none}}
 </style>
 </head>
@@ -1823,16 +1823,7 @@
         </div>
       </div>
     </aside>
-
-      <section class="chatiha-app-gallery" aria-label="تصاویر چتی‌ها">
-        <div class="chatiha-app-gallery-head"><b>چتی‌ها</b><span>فضای ارتباطی ایرانیان چت</span></div>
-        <div class="chatiha-app-gallery-grid">
-          <a href="../assets/images/pic1.png" target="_blank" rel="noopener"><img src="../assets/images/pic1.png" alt="چتی‌ها ۱"></a>
-          <a href="../assets/images/pic2.png" target="_blank" rel="noopener"><img src="../assets/images/pic2.png" alt="چتی‌ها ۲"></a>
-          <a href="../assets/images/pic3.png" target="_blank" rel="noopener"><img src="../assets/images/pic3.png" alt="چتی‌ها ۳"></a>
-        </div>
-      </section>
-    <main class="main">
+<main class="main">
       <header class="mainhead"><button class="back" id="back">‹</button>
         <div class="avatar"><img id="headImg" src="https://i.pravatar.cc/160?img=47"></div>
         <div class="title"><b id="headName">سارا احمدی</b><small id="headStatus">● آنلاین</small></div>
@@ -1898,6 +1889,15 @@
           <div><b>گروه مشترک</b><small>تیم محصول</small></div>
         </div>
       </div>
+    
+      <section class="chatiha-app-gallery" aria-label="تصاویر چتی‌ها">
+        <div class="chatiha-app-gallery-head"><b>چتی‌ها</b><span>فضای ارتباطی ایرانیان چت</span></div>
+        <div class="chatiha-app-gallery-grid">
+          <a href="../assets/images/pic1.png" target="_blank" rel="noopener"><img src="../assets/images/pic1.png" alt="چتی‌ها ۱"></a>
+          <a href="../assets/images/pic2.png" target="_blank" rel="noopener"><img src="../assets/images/pic2.png" alt="چتی‌ها ۲"></a>
+          <a href="../assets/images/pic3.png" target="_blank" rel="noopener"><img src="../assets/images/pic3.png" alt="چتی‌ها ۳"></a>
+        </div>
+      </section>
     </aside>
   </div>
   <div class="toast" id="toast"></div>
