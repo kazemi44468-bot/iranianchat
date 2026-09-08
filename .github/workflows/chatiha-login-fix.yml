@@ -10,20 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Restore login script and background only
+      - name: Replace login background only
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p=Path('chatiha/index.html')
           s=p.read_text(encoding='utf-8')
-          marker='<script>(function(){const data={'
-          start=s.find(marker)
-          if start >= 0:
-              end=s.find('</script>', start)
-              if end >= 0:
-                  s=s[:start]+s[end+len('</script>'):]
-          s=s.replace(".auth:before{content:'';position:absolute;inset:0;background:url('../assets/images/bg-body.png') repeat;background-position:top right;opacity:.5;pointer-events:none;z-index:0}", ".auth:before{content:'';position:absolute;inset:0;background:url('../assets/images/bg-body.png') repeat;background-position:top right;background-size:auto;opacity:.5;pointer-events:none;z-index:0}")
-          s=s.replace('</script></body></html>','<!-- const data={social: --> </script></body></html>')
+          s=s.replace("url('../assets/images/bg-body.png')", "url('../assets/images/fback.png')")
           p.write_text(s,encoding='utf-8')
           PY
       - name: Commit
@@ -31,4 +24,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add chatiha/index.html
-          git diff --cached --quiet || (git commit -m "fix(chatiha): restore login controls" && git push)
+          git diff --cached --quiet || (git commit -m "fix(chatiha): use fback login background" && git push)
