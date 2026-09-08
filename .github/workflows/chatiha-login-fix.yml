@@ -129,6 +129,16 @@ jobs:
           path.write_text(html, encoding="utf-8")
           PY
 
+          root=Path("index.html")
+          root_html=root.read_text(encoding="utf-8")
+          root_html=root_html.replace(
+              '</div><div class="iranianchat-bac3-footer"',
+              '<div class="iranianchat-bac3-footer"',
+              1,
+          )
+          root.write_text(root_html, encoding="utf-8")
+          PY
+
       - name: Format HTML, CSS and JavaScript for readability
         run: |
           npx --yes js-beautify@1.15.4 --type html --indent-size 2 --end-with-newline -r chatiha/index.html
@@ -138,5 +148,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -- .github/workflows/chatiha-login-fix.yml
-          git add chatiha/index.html
-          git diff --cached --quiet || (git commit -m "style(chatiha): reduce b1 background visibility to 15 percent" && git push)
+          git add chatiha/index.html index.html
+          git diff --cached --quiet || (git commit -m "fix(ui): correct footer image placement and 15 percent background" && git push)
