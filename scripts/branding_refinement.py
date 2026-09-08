@@ -1,0 +1,32 @@
+from pathlib import Path
+
+p = Path('index.html')
+s = p.read_text(encoding='utf-8')
+old = '''<div class="footer-brand-block">
+          <div class="footer-brand">ایرانیان چت</div>
+          <p class="footer-desc">پیام‌رسان سریع، امن و هوشمند با قابلیت‌های اجتماعی و راهکارهای ارتباطی اختصاصی برای سازمان‌ها، شرکت‌ها، دانشگاه‌ها و جوامع.</p>
+        </div>'''
+new = '''<div class="footer-brand-block">
+          <div class="footer-brand-lockup"><div class="footer-brand-mark"><img src="assets/images/logo.png" alt="نشان ایرانیان چت"></div><div><div class="footer-brand">ایرانیان چت</div><div class="footer-brand-sub">پیام‌رسان ایرانی، برای ارتباطی امن و ماندگار</div></div></div>
+          <p class="footer-desc">پیام‌رسان سریع، امن و هوشمند با قابلیت‌های اجتماعی و راهکارهای ارتباطی اختصاصی برای سازمان‌ها، شرکت‌ها، دانشگاه‌ها و جوامع.</p>
+        </div>'''
+if old not in s:
+    raise SystemExit('footer block not found')
+s = s.replace(old, new, 1)
+marker = '<div class="iranianchat-contact" id="contact">'
+section = '''<section class="iranianchat-minimal-logos" aria-label="نشان‌های مینیمال ایرانیان چت"><div class="section-head"><h2>نشان‌های مینیمال ایرانیان چت</h2><p>دو اجرای ساده از هویت بصری برند، برای استفاده در فضاهای مختلف.</p></div><div class="iranianchat-minimal-logo-grid"><a href="assets/images/logo1.png" target="_blank" rel="noopener"><img src="assets/images/logo1.png" alt="نشان مینیمال ایرانیان چت - طرح اول"><span>نشان مینیمال ۱</span></a><a href="assets/images/logo2.png" target="_blank" rel="noopener"><img src="assets/images/logo2.png" alt="نشان مینیمال ایرانیان چت - طرح دوم"><span>نشان مینیمال ۲</span></a></div></section>'''
+if 'class="iranianchat-minimal-logos"' not in s:
+    if marker not in s:
+        raise SystemExit('contact marker not found')
+    s = s.replace(marker, section + marker, 1)
+style = '''<style id="iranianchat-brand-refinement">.footer-brand-block{min-height:188px}.footer-brand-lockup{display:flex;align-items:center;gap:13px}.footer-brand-mark{width:64px;height:64px;flex:none;border-radius:19px;overflow:hidden;background:#fff;border:1px solid #dbe7f2;box-shadow:0 12px 28px #24527b14}.footer-brand-mark img{display:block;width:100%;height:100%;object-fit:cover}.footer-brand{line-height:1.45}.footer-brand-sub{margin-top:2px;color:#7a8ca1;font-size:10px;line-height:1.8}.footer-desc{margin:11px 0 0;line-height:2}.iranianchat-minimal-logos{padding:8px 0 38px}.iranianchat-minimal-logos .section-head{text-align:center;margin-bottom:17px}.iranianchat-minimal-logo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:760px;margin:0 auto}.iranianchat-minimal-logo-grid a{min-height:180px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border:1px solid #dce8f4;border-radius:22px;background:#ffffffe8;box-shadow:0 18px 45px #24527b12;transition:.2s}.iranianchat-minimal-logo-grid a:hover{transform:translateY(-3px);box-shadow:0 22px 50px #24527b18}.iranianchat-minimal-logo-grid img{display:block;width:min(150px,60%);height:110px;object-fit:contain}.iranianchat-minimal-logo-grid span{font-size:10px;font-weight:700;color:#667991}@media(max-width:760px){.footer-brand-block{min-height:auto}.footer-brand-mark{width:58px;height:58px;border-radius:17px}.footer-brand-sub{font-size:9px}.iranianchat-minimal-logo-grid{grid-template-columns:1fr}.iranianchat-minimal-logo-grid a{min-height:160px}.iranianchat-minimal-logo-grid img{height:95px}}</style>'''
+if 'id="iranianchat-brand-refinement"' not in s:
+    s = s.replace('</head>', style + '</head>', 1)
+p.write_text(s, encoding='utf-8')
+
+p = Path('chatiha/index.html')
+s = p.read_text(encoding='utf-8')
+style = '''<style id="chatiha-auth-logo-refinement">.auth-visual .auth-logo{width:112px;height:112px;border-radius:30px;margin:0 auto 24px;align-self:center;box-shadow:0 18px 38px #2478ef30}.auth-visual .auth-logo img{display:block;width:100%;height:100%;object-fit:cover}.auth-visual p{margin-left:auto;margin-right:auto}@media(max-width:800px){.auth-visual .auth-logo{width:90px;height:90px;border-radius:25px;margin-bottom:16px}}</style>'''
+if 'id="chatiha-auth-logo-refinement"' not in s:
+    s = s.replace('</head>', style + '</head>', 1)
+p.write_text(s, encoding='utf-8')
