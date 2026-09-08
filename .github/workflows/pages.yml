@@ -39,10 +39,21 @@ jobs:
           s = re.sub(r'\s*n</body>', '\n</body>', s, count=1)
           p.write_text(s, encoding='utf-8')
           PY
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '''<div class="iranianchat-contact" id="contact"><div class="section-head"><h2>تماس با ما</h2><p>برای همکاری، توسعه نسخه اختصاصی یا دریافت اطلاعات بیشتر با ما در ارتباط باشید.</p></div><div class="iranianchat-contact-grid"><div class="iranianchat-contact-item"><b>وب‌سایت چتی‌ها</b><a href="https://chatiha.ir" target="_blank" rel="noopener noreferrer">chatiha.ir</a></div><div class="iranianchat-contact-item"><b>ایمیل همکاری</b><a href="mailto:support@chatiha.ir">support@chatiha.ir</a></div><div class="iranianchat-contact-item"><b>پشتیبانی</b><span>از داخل محیط چتی‌ها و مسیرهای ارتباطی سامانه</span></div></div></div>'''
+          new = '''<div class="iranianchat-contact" id="contact"><div class="section-head"><h2>تماس با ایرانیان چت</h2><p>برای همکاری، توسعه نسخه اختصاصی یا دریافت اطلاعات بیشتر با ایرانیان چت در ارتباط باشید.</p></div><div class="iranianchat-contact-grid"><div class="iranianchat-contact-item"><b>آدرس دفتر مرکزی</b><span>تهران، خیابان ولیعصر، بالاتر از میدان ونک، یک آدرس نمونه</span></div><div class="iranianchat-contact-item"><b>شماره تماس</b><a href="tel:02191001234">۰۲۱-۹۱۰۰۱۲۳۴</a></div><div class="iranianchat-contact-item"><b>ایمیل ارتباط با ایرانیان چت</b><a href="mailto:info@iranianchat.ir">info@iranianchat.ir</a></div></div></div>'''
+          if old not in s:
+              raise SystemExit('IranianChat contact block not found')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add chatiha/index.html
-          git diff --cached --quiet || (git commit -m 'fix: reposition Chatiha gallery' && git push)
+          git add chatiha/index.html index.html
+          git diff --cached --quiet || (git commit -m 'fix: correct IranianChat contact details' && git push)
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
