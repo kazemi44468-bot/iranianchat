@@ -4,7 +4,7 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 concurrency:
@@ -19,30 +19,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Repair Chatiha UI before deployment
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          p = Path('chatiha/index.html')
-          s = p.read_text(encoding='utf-8')
-          s = re.sub(r'\s*<div class="chatiha-auth-gallery"[^>]*>.*?</div>\s*', '\n', s, count=1, flags=re.S)
-          gallery = '''\n      <section class="chatiha-app-gallery" aria-label="تصاویر چتی‌ها">\n        <div class="chatiha-app-gallery-head"><b>چتی‌ها</b><span>فضای ارتباطی ایرانیان چت</span></div>\n        <div class="chatiha-app-gallery-grid">\n          <a href="../assets/images/pic1.png" target="_blank" rel="noopener"><img src="../assets/images/pic1.png" alt="چتی‌ها ۱"></a>\n          <a href="../assets/images/pic2.png" target="_blank" rel="noopener"><img src="../assets/images/pic2.png" alt="چتی‌ها ۲"></a>\n          <a href="../assets/images/pic3.png" target="_blank" rel="noopener"><img src="../assets/images/pic3.png" alt="چتی‌ها ۳"></a>\n        </div>\n      </section>\n'''
-          s = re.sub(r'\s*<section class="chatiha-app-gallery"[^>]*>.*?</section>\s*', '\n', s, count=1, flags=re.S)
-          if '</aside>' in s:
-              s = s.rsplit('</aside>', 1)[0] + gallery + '    </aside>' + s.rsplit('</aside>', 1)[1]
-          style = '''\n<style id="chatiha-gallery-repair">\n.chatiha-auth-gallery{display:none!important}\n.chatiha-app-gallery{margin:12px 13px 13px;padding:10px;border:1px solid var(--line);border-radius:16px;background:#ffffffd9;box-shadow:0 10px 28px #315c8810}\n.chatiha-app-gallery-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:9px}.chatiha-app-gallery-head b{font-size:11px}.chatiha-app-gallery-head span{color:var(--muted);font-size:8px}\n.chatiha-app-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.chatiha-app-gallery-grid a{display:block;overflow:hidden;aspect-ratio:1.35;border-radius:11px;border:1px solid var(--line)}.chatiha-app-gallery-grid img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .2s}.chatiha-app-gallery-grid a:hover img{transform:scale(1.04)}\n@media(max-width:1050px){.chatiha-app-gallery{display:none}}\n</style>\n'''
-          s = re.sub(r'\s*<style id="chatiha-gallery-repair">.*?</style>\s*', '\n', s, count=1, flags=re.S)
-          s = s.replace('</head>', style + '</head>', 1)
-          s = re.sub(r'\s*< script >.*?</script>\s*</script>\s*', '\n</script>\n', s, count=1, flags=re.S)
-          s = re.sub(r'\s*<script id="chatiha-interaction-repair">.*?</script>\s*', '\n', s, count=1, flags=re.S)
-          s = re.sub(r'\s*n</body>', '\n</body>', s, count=1)
-          p.write_text(s, encoding='utf-8')
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add chatiha/index.html
-          git diff --cached --quiet || (git commit -m 'fix: reposition Chatiha gallery' && git push)
-          PY
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
