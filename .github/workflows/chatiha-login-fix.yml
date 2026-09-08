@@ -47,7 +47,7 @@ jobs:
             flex-direction: column;
             gap: 0;
             background-image:
-              linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+              linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
               url('../assets/images/b1.png'),
               linear-gradient(135deg, #f7fbff, #eef6ff 48%, #f8fbff);
             background-repeat: repeat, repeat, repeat;
@@ -139,4 +139,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -- .github/workflows/chatiha-login-fix.yml
           git add chatiha/index.html
-          git diff --cached --quiet || (git commit -m "style(chatiha): reduce b1 background visibility" && git push)
+          git diff --cached --quiet || (git commit -m "style(chatiha): reduce b1 background visibility to 15 percent" && git push)
