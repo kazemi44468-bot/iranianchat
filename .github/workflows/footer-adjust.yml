@@ -37,3 +37,4 @@ jobs:
           git diff --cached --check
           git commit -m "chore: adjust IranianChat footer lockup"
           git push
+# trigger
