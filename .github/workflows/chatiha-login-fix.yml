@@ -1,3 +1,4 @@
+# temporary deployment trigger
 name: Chatiha Login Fix
 
 on:
@@ -39,31 +40,12 @@ jobs:
           }
           </style>"""
 
-          html = re.sub(
-              r'<style id="iranianchat-bac3-footer-style">.*?</style>',
-              style,
-              html,
-              count=1,
-              flags=re.S,
-          )
-
-          html = re.sub(
-              r'<div class="iranianchat-bac3-footer" aria-hidden="true"></div>',
-              '',
-              html,
-          )
-
-          footer_end = '</footer>'
-          if footer_end not in html:
+          html = re.sub(r'<style id="iranianchat-bac3-footer-style">.*?</style>', style, html, count=1, flags=re.S)
+          html = re.sub(r'<div class="iranianchat-bac3-footer" aria-hidden="true"></div>', '', html)
+          if '</footer>' not in html:
               raise SystemExit('Footer not found; no change made.')
-
-          html = html.replace(
-              footer_end,
-              footer_end + '<div class="iranianchat-bac3-footer" aria-hidden="true"></div>',
-              1,
-          )
-
-          path.write_text(html, encoding="utf-8")
+          html = html.replace('</footer>', '</footer><div class="iranianchat-bac3-footer" aria-hidden="true"></div>', 1)
+          path.write_text(html, encoding='utf-8')
           PY
 
       - name: Commit homepage only
