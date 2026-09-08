@@ -4,7 +4,7 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 concurrency:
@@ -19,31 +19,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Apply requested footer-only CSS change
-        shell: python
-        run: |
-          from pathlib import Path
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
-          old = '.footer-brand-lockup{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}'
-          new = '.footer-brand-lockup{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:13px;text-align:center}'
-          if s.count(old) != 1:
-              raise SystemExit(f'Expected footer lockup CSS exactly once, found {s.count(old)}')
-          s = s.replace(old, new, 1)
-          old_last = '.footer-brand-lockup>div:last-child{text-align:center}'
-          new_last = '.footer-brand-lockup>div:last-child{text-align:right}'
-          if s.count(old_last) != 1:
-              raise SystemExit(f'Expected footer text alignment CSS exactly once, found {s.count(old_last)}')
-          s = s.replace(old_last, new_last, 1)
-          p.write_text(s, encoding='utf-8')
-      - name: Commit footer-only source change
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add index.html
-          git diff --cached --check
-          git commit -m "chore: adjust IranianChat footer lockup"
-          git push
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
