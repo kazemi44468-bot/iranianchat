@@ -128,19 +128,142 @@ jobs:
 
           path.write_text(html, encoding="utf-8")
 
-          root=Path("index.html")
-          root_html=root.read_text(encoding="utf-8")
-          root_html=root_html.replace(
+          root = Path("index.html")
+          root_html = root.read_text(encoding="utf-8")
+          root_html = root_html.replace(
               '</div><div class="iranianchat-bac3-footer"',
               '<div class="iranianchat-bac3-footer"',
               1,
           )
+
+          root_style = """<style id="iranianchat-footer-typography">
+          .footer {
+            position: relative !important;
+            padding-bottom: 68px !important;
+            overflow: hidden !important;
+          }
+
+          .iranianchat-bac3-footer {
+            position: absolute !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 46px !important;
+            min-height: 46px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background-image: url('assets/images/bac3.png') !important;
+            background-repeat: repeat-x !important;
+            background-position: center bottom !important;
+            background-size: 484px 46px !important;
+            transform: none !important;
+            z-index: 2 !important;
+            pointer-events: none !important;
+          }
+
+          .footer-brand {
+            font-size: 19px !important;
+            line-height: 1.7 !important;
+          }
+
+          .footer-desc {
+            font-size: 13px !important;
+            line-height: 2 !important;
+          }
+
+          .footer-col h4 {
+            font-size: 15px !important;
+            line-height: 1.8 !important;
+            margin-bottom: 10px !important;
+          }
+
+          .footer-col a {
+            font-size: 13px !important;
+            line-height: 2 !important;
+          }
+
+          .footer-bottom {
+            font-size: 12px !important;
+            line-height: 1.9 !important;
+          }
+
+          .footer-bottom small,
+          .footer-bottom span {
+            font-size: 12px !important;
+            line-height: 1.9 !important;
+          }
+
+          @media (max-width: 760px) {
+            .footer {
+              padding-bottom: 68px !important;
+            }
+
+            .footer-brand {
+              font-size: 17px !important;
+            }
+
+            .footer-desc {
+              font-size: 12px !important;
+            }
+
+            .footer-col h4 {
+              font-size: 14px !important;
+            }
+
+            .footer-col a {
+              font-size: 12px !important;
+              line-height: 1.95 !important;
+            }
+
+            .footer-bottom,
+            .footer-bottom small,
+            .footer-bottom span {
+              font-size: 11px !important;
+              line-height: 1.9 !important;
+            }
+          }
+
+          @media (max-width: 420px) {
+            .footer-brand {
+              font-size: 16px !important;
+            }
+
+            .footer-desc,
+            .footer-col a {
+              font-size: 11px !important;
+            }
+
+            .footer-col h4 {
+              font-size: 13px !important;
+            }
+
+            .footer-bottom,
+            .footer-bottom small,
+            .footer-bottom span {
+              font-size: 10.5px !important;
+            }
+          }
+          </style>"""
+
+          if 'id="iranianchat-footer-typography"' in root_html:
+              root_html = re.sub(
+                  r'<style id="iranianchat-footer-typography">.*?</style>',
+                  root_style,
+                  root_html,
+                  count=1,
+                  flags=re.S,
+              )
+          else:
+              root_html = root_html.replace("</head>", root_style + "</head>", 1)
+
           root.write_text(root_html, encoding="utf-8")
           PY
 
       - name: Format HTML, CSS and JavaScript for readability
         run: |
           npx --yes js-beautify@1.15.4 --type html --indent-size 2 --end-with-newline -r chatiha/index.html
+          npx --yes js-beautify@1.15.4 --type html --indent-size 2 --end-with-newline -r index.html
 
       - name: Commit page only
         run: |
@@ -148,4 +271,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -- .github/workflows/chatiha-login-fix.yml
           git add chatiha/index.html index.html
-          git diff --cached --quiet || (git commit -m "fix(ui): correct footer image placement and 15 percent background" && git push)
+          git diff --cached --quiet || (git commit -m "fix(ui): anchor footer decoration and normalize typography" && git push)
