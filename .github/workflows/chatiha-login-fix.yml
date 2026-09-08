@@ -12,7 +12,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Restore original login page and add bac3
         run: |
-          git show 87406635bdc8036935c70d815dbde6b373695503:chatiha/index.html > chatiha/index.html
+          git fetch --no-tags --depth=50 origin main
+          git show 4e9e5c0fe3749b8c8f446bc31ac8507c307b8d62:chatiha/index.html > chatiha/index.html
           python3 - <<'PY'
           from pathlib import Path
           p=Path('chatiha/index.html')
@@ -25,7 +26,8 @@ jobs:
           marker='<div class="auth-orb2"></div>'
           if 'class="auth-bac3"' not in s:
               s=s.replace(marker,marker+top,1)
-              s=s.replace('</div></section>', '</div>'+ '<img class="auth-bac3" src="../assets/images/bac3.png" alt="">' +'</section>',1)
+              end='</section>'
+              s=s.replace(end,'<img class="auth-bac3" src="../assets/images/bac3.png" alt=""></section>',1)
           p.write_text(s,encoding='utf-8')
           PY
       - name: Commit page only
