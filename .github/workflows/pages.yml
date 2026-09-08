@@ -1,4 +1,5 @@
 name: Deploy IranianChat
+# Temporary persistence step for the requested Chatiha login refinement.
 on:
   push:
     branches: [main]
