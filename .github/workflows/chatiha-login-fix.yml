@@ -16,21 +16,22 @@ jobs:
           git show 4e9e5c0fe3749b8c8f446bc31ac8507c307b8d62:chatiha/index.html > chatiha/index.html
           python3 - <<'PY'
           from pathlib import Path
+          import re
           p=Path('chatiha/index.html')
           s=p.read_text(encoding='utf-8')
-          style='''<style id="chatiha-bac3-style">.auth-bac3{display:block;width:100%;height:46px;flex:0 0 46px;background-image:url('../assets/images/bac3.png');background-repeat:repeat-x;background-position:center top;background-size:484px 46px}.auth-bac3.bottom{transform:rotate(180deg)}.auth-gate{flex-direction:column;gap:0}.auth-gate .auth-bac3{position:relative;z-index:2}@media(max-width:520px){.auth-bac3{background-size:484px 46px}}</style>'''
+          style='''<style id="chatiha-bac3-style">html,body{width:100%;height:100%;overflow:hidden}.auth-gate{position:fixed;inset:0;width:100%;height:100svh;min-height:0;padding:0;overflow:hidden;justify-content:space-between;flex-direction:column;gap:0}.auth-card{flex:0 1 auto;max-height:calc(100svh - 92px);overflow:auto}.auth-bac3{display:block;width:100%;height:46px;min-height:46px;flex:0 0 46px;background-image:url('../assets/images/bac3.png');background-repeat:repeat-x;background-position:center top;background-size:484px 46px}.auth-bac3.bottom{transform:rotate(180deg)}.auth-gate .auth-bac3{position:relative;z-index:2}@media(max-width:760px){.auth-gate{padding:0}.auth-card{max-height:calc(100svh - 92px)}}@media(max-width:520px){.auth-bac3{background-size:484px 46px}}</style>'''
           if 'id="chatiha-bac3-style"' in s:
-              import re
               s=re.sub(r'<style id="chatiha-bac3-style">.*?</style>',style,s,count=1,flags=re.S)
           else:
               s=s.replace('</head>',style+'</head>',1)
-          import re
           s=re.sub(r'<img class="auth-bac3" src="\.\./assets/images/bac3\.png" alt="">','',s)
           marker='<div class="auth-orb2"></div>'
           top='<div class="auth-bac3" aria-hidden="true"></div>'
           bottom='<div class="auth-bac3 bottom" aria-hidden="true"></div>'
-          s=s.replace(marker,marker+top,1)
-          s=s.replace('</section>',bottom+'</section>',1)
+          if '<div class="auth-bac3" aria-hidden="true"></div>' not in s:
+              s=s.replace(marker,marker+top,1)
+          if '<div class="auth-bac3 bottom" aria-hidden="true"></div>' not in s:
+              s=s.replace('</section>',bottom+'</section>',1)
           p.write_text(s,encoding='utf-8')
           PY
       - name: Commit page only
@@ -39,4 +40,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -- .github/workflows/chatiha-login-fix.yml
           git add chatiha/index.html
-          git diff --cached --quiet || (git commit -m "fix(chatiha): tile bac3 without resizing" && git push)
+          git diff --cached --quiet || (git commit -m "fix(chatiha): pin bac3 to edges and prevent page scroll" && git push)
