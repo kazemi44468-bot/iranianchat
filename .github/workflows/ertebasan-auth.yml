@@ -7,16 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Patch Ertebasan
-        run: |
-          echo 'ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmltcG9ydCByZQpjaGF0aWhhPVBhdGgoImNoYXRpaGEvaW5kZXguaHRtbCIpLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKQplcnRlYmFzYW49UGF0aCgiZXJ0ZWJhc2FuL2luZGV4Lmh0bWwiKS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikKYXV0aF9zdHlsZT1yZS5zZWFyY2gocic8c3R5bGUgaWQ9ImNoYXRpaGEtYXV0aC1zdHlsZSI+Lio/PC9zdHlsZT4nLGNoYXRpaGEscmUuUykuZ3JvdXAoMCkKYXV0aF9yZWZpbmU9cmUuc2VhcmNoKHInPHN0eWxlIGlkPSJjaGF0aWEtYXV0aC1sb2dvLXJlZmluZW1lbnQiPi4qPzwvc3R5bGU+JyxjaGF0aWhhLHJlLlMpLmdyb3VwKDApCmdhdGU9cmUuc2VhcmNoKHInPHNlY3Rpb24gY2xhc3M9ImF1dGgtZ2F0ZSIgaWQ9ImF1dGhHYXRlIi4qPzwvc2VjdGlvbj4nLGNoYXRpaGEsUkUuUykuZ3JvdXAoMCkKc2NyaXB0X3RhZz1yZS5zZWFyY2gocic8c2NyaXB0IGlkPSJjaGF0aWhhLWF1dGgtc2NyaXB0Ij4uKj88L3NjcmlwdD4nLGNoYXRpaGEsUkUuUykuZ3JvdXAoMCkK' | base64 -d > /tmp/patch.py
-          python3 /tmp/patch.py
-      - name: Commit and remove workflow
-        run: |
+      - run: python3 scripts/patch_ertebasan_auth.py
+      - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add ertebasan/index.html
           git commit -m "Add Ertebasan login page with contact options"
-          git rm .github/workflows/ertebasan-auth.yml
-          git commit -m "Remove temporary Ertebasan auth workflow"
+          git rm scripts/patch_ertebasan_auth.py .github/workflows/ertebasan-auth.yml
+          git commit -m "Remove temporary Ertebasan patch files"
           git push
