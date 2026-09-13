@@ -1,7 +1,8 @@
 name: Add Ertebasan login gate
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 permissions:
   contents: write
 jobs:
@@ -10,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Add login gate
-        shell: python
         run: |
+          python3 <<'PY'
           from pathlib import Path
           import re
           chatiha = Path('chatiha/index.html').read_text(encoding='utf-8')
@@ -24,12 +25,14 @@ jobs:
           gate = gate.replace('alt="چتی‌ها"', 'alt="ارتباسان"')
           gate = gate.replace('به <span>چتی‌ها</span> خوش آمدید', 'به <span>ارتباسان</span> خوش آمدید')
           gate = gate.replace('پیام‌رسان و شبکه ارتباطی ایرانیان؛ گفتگو، گروه، کانال، تماس و ارتباطات اجتماعی در یک فضای یکپارچه.', 'شبکه ارتباطی آسان و امن برای ارتباطات صوتی، تصویری و متنی در یک فضای یکپارچه.')
-          gate = re.sub(r'<div class="auth-features">.*?</div>\s*</div>', '''<div class="auth-features">
-          <div class="auth-feature"><i>☎</i><span>تماس صوتی</span></div>
-          <div class="auth-feature"><i>▣</i><span>تماس تصویری</span></div>
-          <div class="auth-feature"><i>✉</i><span>تماس متنی</span></div>
-        </div>
-      </div>''', gate, flags=re.S)
+          old = re.search(r'<div class="auth-features">.*?</div>\s*</div>', gate, re.S)
+          new = '''<div class="auth-features">
+            <div class="auth-feature"><i>☎</i><span>تماس صوتی</span></div>
+            <div class="auth-feature"><i>▣</i><span>تماس تصویری</span></div>
+            <div class="auth-feature"><i>✉</i><span>تماس متنی</span></div>
+          </div>
+        </div>'''
+          gate = gate[:old.start()] + new + gate[old.end():]
           script = script.replace('ورود به چتی‌ها', 'ورود به ارتباسان')
           extra = '''<style id="ertebasan-auth-refinement">
           .auth-features{grid-template-columns:repeat(3,1fr);gap:9px;max-width:100%}
@@ -40,13 +43,13 @@ jobs:
           ertebasan = ertebasan.replace('<body>', '<body>\n' + gate, 1)
           ertebasan = ertebasan.replace('</body>', script + '\n</body>', 1)
           Path('ertebasan/index.html').write_text(ertebasan, encoding='utf-8')
+          PY
       - name: Commit changes and remove workflow
-        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add ertebasan/index.html
           git commit -m "Add Ertebasan login page with contact options"
-          git add .github/workflows/ertebasan-auth.yml
+          git rm .github/workflows/ertebasan-auth.yml
           git commit -m "Remove temporary Ertebasan auth workflow"
           git push
