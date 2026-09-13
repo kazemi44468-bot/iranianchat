@@ -1,0 +1,36 @@
+name: One-time IranianChat header fix
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update main index only
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<a class="btn primary" href="chatiha/">مشاهده نمونه</a>'
+          new = '<div class="header-products"><a class="btn" href="ertebasan/">ارتباسان</a><a class="btn primary" href="chatiha/">چتی‌ها</a></div>'
+          if old not in s:
+              raise SystemExit('Target header button not found')
+          s = s.replace(old, new, 1)
+          marker = '.mobile-menu {'
+          css = '.header-products{display:flex;align-items:center;gap:8px}.header-products .btn{min-height:42px;padding:8px 16px}.header-products .btn:first-child{color:#2478ef;border-color:#cfe2f8;background:#f7fbff}'
+          if css not in s:
+              s = s.replace(marker, css + '\n\n    ' + marker, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit main index and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git rm .github/workflows/one-time-header-fix.yml
+          git commit -m "Update IranianChat header product links"
+          git push
